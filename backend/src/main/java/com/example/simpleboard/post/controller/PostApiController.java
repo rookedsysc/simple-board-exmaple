@@ -33,7 +33,6 @@ public class PostApiController {
     @GetMapping("all")
     public List<PostEntity> list() {
         return postService.all();
-
     }
 
     @PostMapping("/delete")

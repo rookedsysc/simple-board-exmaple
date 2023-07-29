@@ -4,18 +4,22 @@ import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.db.PostRepository;
 import com.example.simpleboard.post.model.PostRequest;
 import com.example.simpleboard.post.model.PostViewRequest;
+import com.example.simpleboard.reply.db.ReplyEntity;
+import com.example.simpleboard.reply.db.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-
+    private final ReplyRepository replyService;
     public PostEntity create(PostRequest postRequest) {
         PostEntity entity = PostEntity.builder()
                 .boardId(1L)
@@ -43,6 +47,10 @@ public class PostService {
                                 var format = "패스워드가 맞지 않습니다. %s vs %s";
                                 throw new RuntimeException(String.format(format, it.getPassword(), postViewRequest.getPassword()));
                             }
+
+                            // 게시글을 불러올 때 Reply도 같이 불러온다.
+                            List<ReplyEntity> replyList = replyService.findAllByPostIdAndStatusOrderByIdDesc(it.getId(), "REGISTERED");
+                            it.setReplyList(replyList);
                             return it;
                         }
                 )
@@ -51,10 +59,16 @@ public class PostService {
                 });
     }
 
-
-
     public List<PostEntity> all() {
-        return postRepository.findAll();
+        List<PostEntity> allPost = postRepository.findAll();
+        allPost
+                .stream()
+                .map(it -> {
+                    List<ReplyEntity> replyList = replyService.findAllByPostIdAndStatusOrderByIdDesc(it.getId(), "REGISTERED");
+                    it.setReplyCount(replyList.size());
+                    return it;
+                }).collect(Collectors.toList());
+        return allPost;
     }
 
     public void delete(PostViewRequest postViewRequest) {

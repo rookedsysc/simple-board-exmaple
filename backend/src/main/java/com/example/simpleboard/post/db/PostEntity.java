@@ -1,5 +1,6 @@
 package com.example.simpleboard.post.db;
 
+import com.example.simpleboard.reply.db.ReplyEntity;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -11,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -33,4 +35,10 @@ public class PostEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime postedAt;
+    // Entity Annotation이 붙어있으면 기본적으로 이곳에 선언된 변수들은 DB의 Column으로 인식한다.
+    // Transient Annotation을 붙여주면 DB의 Column으로 인식하지 않는다.(Container 등록시에 무시함)
+    @Transient
+    private List<ReplyEntity> replyList = List.of();
+    @Transient
+    private Integer replyCount;
 }
