@@ -48,7 +48,7 @@ class ThemeImpl {
         bodyLarge: TextStyle(
             color: _defaultColor(), fontSize: 24, fontWeight: FontWeight.w900),
         bodyMedium: TextStyle(color: _defaultColor(), fontSize: 14),
-        bodySmall: TextStyle(color: _defaultColor(), fontSize: 10),
+        bodySmall: TextStyle(color: _defaultColor(), fontSize: 12),
       ),
     );
   }

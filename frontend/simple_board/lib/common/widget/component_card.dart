@@ -19,7 +19,7 @@ class ComponentCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           color: theme.cardColor,
         ),
-        child: child,
+        child: PaddingFactory.createSmallAroundAll(child: child),
       ),
     );
   }

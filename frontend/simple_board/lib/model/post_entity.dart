@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'post_entity.g.dart';
@@ -16,6 +17,30 @@ class PostEntity {
   final String? content;
   @JsonKey(name: 'posted_at')
   final DateTime postedAt;
+
+  PostEntity copyWith({
+    double? id,
+    double? boardId,
+    String? userName,
+    String? password,
+    String? email,
+    String? status,
+    String? title,
+    String? content,
+    DateTime? postedAt,
+  }) {
+    return PostEntity(
+      id: id ?? this.id,
+      boardId: boardId ?? this.boardId,
+      userName: userName ?? this.userName,
+      password: password ?? this.password,
+      email: email ?? this.email,
+      status: status ?? this.status,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      postedAt: postedAt ?? this.postedAt,
+    );
+  }
 
   PostEntity({
     required this.id,

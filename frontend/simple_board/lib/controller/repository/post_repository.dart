@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_board/controller/provider/dio_provider.dart';
 import 'package:simple_board/model/post_entity.dart';
 import 'package:simple_board/model/post_request_model.dart';
+import 'package:simple_board/model/post_view_model.dart';
 
 part 'post_repository.g.dart';
 
@@ -28,7 +29,7 @@ class PostRepository {
   }
 
   Future<List<PostEntity>> getAllPost() async {
-    final Response resp = await _dio.get(_url + '/all');
+    final Response resp = await _dio.get('$_url/all');
     List<PostEntity> result = [];
     try {
       List<dynamic> data = resp.data as List;
@@ -38,4 +39,13 @@ class PostRepository {
     }
     return result;
   }
+
+    Future<void> delete(PostViewModel model) async {
+    try {
+      await _dio.post("$_url/delete", data: model.toJson());
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
 }

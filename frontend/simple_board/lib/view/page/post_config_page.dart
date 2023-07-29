@@ -3,11 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_board/common/plain_text_widget.dart';
 import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/common/widget/padding_factory.dart';
 import 'package:simple_board/controller/repository/post_repository.dart';
+import 'package:simple_board/model/post_entity.dart';
 import 'package:simple_board/model/post_request_model.dart';
 part 'post_config_page.g.dart';
 
@@ -20,22 +22,32 @@ class PostConfigPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: Form(
-        key: _postConfigKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ComponentCard(height: 50, child: _userNameForm(ref)),
-            ComponentCard(height: 50, child: _passwordForm(ref)),
-            ComponentCard(height: 50, child: _emailForm(ref)),
-            ComponentCard(height: 50, child: _titleForm(ref)),
-            ComponentCard(height: 50, child: _contentForm(ref)),
-            PaddingFactory.createAll(
-              child: _saveButton(context, ref),
-            ),
-          ],
+    return CupertinoScaffold(
+      body: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new, color: Theme.of(context).primaryColor,),
+            onPressed: () {
+              context.pop();
+            },
+          ),
+        ),
+        body: Form(
+          key: _postConfigKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ComponentCard(height: 50, child: _userNameForm(ref)),
+              ComponentCard(height: 50, child: _passwordForm(ref)),
+              ComponentCard(height: 50, child: _emailForm(ref)),
+              ComponentCard(height: 50, child: _titleForm(ref)),
+              ComponentCard(height: 50, child: _contentForm(ref)),
+              PaddingFactory.createAll(
+                child: _saveButton(context, ref),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -140,9 +152,10 @@ class PostConfigPage extends ConsumerWidget {
 @riverpod
 PostRequestModel postConfigPage(PostConfigPageRef ref) {
   return PostRequestModel(
-      content: 'Content',
-      email: 'Email',
-      password: 'Password 4자리 숫자',
-      title: 'Title',
-      userName: 'User Nmae');
+    content: 'Content',
+    email: 'Email',
+    password: 'Password 4자리 숫자',
+    title: 'Title',
+    userName: 'User Nmae',
+  );
 }
