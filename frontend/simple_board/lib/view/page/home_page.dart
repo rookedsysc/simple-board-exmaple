@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/controller/repository/post_repository.dart';
 import 'package:simple_board/model/post_entity.dart';
+import 'package:simple_board/view/widget/create_post_button.dart';
 
 class HomePage extends ConsumerWidget {
   static const String routeName = '/';
@@ -11,8 +12,15 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      floatingActionButton: CreatePostButton(),
-      appBar: AppBar(),
+      floatingActionButton: const CreatePostButton(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.remove),
+          ),
+        ],
+      ),
       body: FutureBuilder<List<PostEntity>>(
         future: ref.read(postRepositoryProvider).getAllPost(),
         builder: (context, snapshot) {
