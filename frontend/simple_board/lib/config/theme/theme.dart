@@ -10,7 +10,7 @@ class ThemeImpl {
 
   ThemeData data() {
     // final Color primaryColor = Color.fromRGBO(119, 231, 228, 1);
-    const Color primaryColor = Colors.blue;
+    const Color primaryColor = Color.fromRGBO(38, 196, 137, 1);
     return ThemeData(
       primaryIconTheme: const IconThemeData(color: primaryColor),
       cupertinoOverrideTheme: CupertinoThemeData(

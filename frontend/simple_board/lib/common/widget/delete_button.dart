@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:simple_board/common/plain_text_widget.dart';
-import 'package:simple_board/controller/repository/post_repository.dart';
-import 'package:simple_board/model/post_view_model.dart';
+import 'package:simple_board/common/interface/repository_base.dart';
+import 'package:simple_board/common/interface/request_base.dart';
+import 'package:simple_board/common/widget/plain_text_widget.dart';
 
-class PostDeleteButton extends ConsumerWidget {
-  final PostViewModel postViewModel;
-  const PostDeleteButton({
+class DeleteButton<R extends RequestBase> extends ConsumerWidget {
+  final R request;
+  final RepositoryBase repository;
+  const DeleteButton({
     super.key,
-    required this.postViewModel,
+    required this.request,
+    required this.repository,
   });
 
   @override
@@ -28,7 +30,7 @@ class PostDeleteButton extends ConsumerWidget {
                     title: "Password",
                     hintText: "Enter your password(4 digits)",
                     onChanged: (value) {
-                      postViewModel.password = value;
+                      request.password = value;
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -41,9 +43,7 @@ class PostDeleteButton extends ConsumerWidget {
                     TextButton(
                       onPressed: () async {
                         try {
-                          await ref
-                              .read(postRepositoryProvider)
-                              .delete(postViewModel);
+                          repository.delete(request);
                           if (context.mounted) {
                             context.pop();
                           }

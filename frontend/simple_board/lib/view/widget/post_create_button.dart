@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:simple_board/view/page/post_config_page.dart';
 
-class CreatePostButton extends ConsumerWidget {
-  const CreatePostButton({
+class PostCreateButton extends ConsumerWidget {
+  const PostCreateButton({
     super.key,
   });
 

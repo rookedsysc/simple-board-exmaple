@@ -6,8 +6,8 @@ part of 'post_request_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PostRequestModel _$PostRequestModelFromJson(Map<String, dynamic> json) =>
-    PostRequestModel(
+PostCreateRequest _$PostCreateRequestFromJson(Map<String, dynamic> json) =>
+    PostCreateRequest(
       userName: json['user_name'] as String,
       password: json['password'] as String,
       email: json['email'] as String,
@@ -15,7 +15,7 @@ PostRequestModel _$PostRequestModelFromJson(Map<String, dynamic> json) =>
       content: json['content'] as String,
     );
 
-Map<String, dynamic> _$PostRequestModelToJson(PostRequestModel instance) =>
+Map<String, dynamic> _$PostCreateRequestToJson(PostCreateRequest instance) =>
     <String, dynamic>{
       'user_name': instance.userName,
       'password': instance.password,

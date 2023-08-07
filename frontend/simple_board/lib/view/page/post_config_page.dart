@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:simple_board/common/plain_text_widget.dart';
+import 'package:simple_board/common/widget/plain_text_widget.dart';
 import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/common/widget/padding_factory.dart';
 import 'package:simple_board/controller/repository/post_repository.dart';
@@ -135,7 +135,7 @@ class PostConfigPage extends ConsumerWidget {
         onPressed: () async {
           if (_postConfigKey.currentState!.validate()) {
             _postConfigKey.currentState!.save();
-            PostRequestModel request = ref.read(postConfigPageProvider);
+            PostCreateRequest request = ref.read(postConfigPageProvider);
             await ref.read(postRepositoryProvider).create(request);
             if (context.mounted) {
               context.pop();
@@ -150,8 +150,8 @@ class PostConfigPage extends ConsumerWidget {
 }
 
 @riverpod
-PostRequestModel postConfigPage(PostConfigPageRef ref) {
-  return PostRequestModel(
+PostCreateRequest postConfigPage(PostConfigPageRef ref) {
+  return PostCreateRequest(
     content: 'Content',
     email: 'Email',
     password: 'Password 4자리 숫자',

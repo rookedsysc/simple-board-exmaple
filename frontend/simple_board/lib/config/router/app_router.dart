@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:simple_board/view/page/home_page.dart';
+import 'package:simple_board/view/page/board_page.dart';
+import 'package:simple_board/view/page/post_page.dart';
 import 'package:simple_board/view/page/post_config_page.dart';
 
 part 'app_router.g.dart';
@@ -9,18 +10,27 @@ part 'app_router.g.dart';
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
     routes: [
-      _homePage(routes: [
-        _postConfigPage(routes: []),
-      ]),
+        _postPage(routes: [
+          _postConfigPage(routes: []),
+        ]),
     ],
   );
 }
 
-GoRoute _homePage({required List<GoRoute> routes}) {
+GoRoute _boardPage({required List<GoRoute> routes}) {
   return GoRoute(
-    path: HomePage.routeName,
-    name: HomePage.routeName,
-    builder: (context, state) => const HomePage(),
+    path: BoardPage.routeName,
+    name: BoardPage.routeName,
+    builder: (context, state) => const BoardPage(),
+    routes: routes,
+  );
+}
+
+GoRoute _postPage({required List<GoRoute> routes}) {
+  return GoRoute(
+    path: PostPage.routeName,
+    name: PostPage.routeName,
+    builder: (context, state) => const PostPage(),
     routes: routes,
   );
 }
