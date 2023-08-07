@@ -1,15 +1,15 @@
 package com.example.simpleboard.post.db;
 
+import com.example.simpleboard.board.db.BoardEntity;
 import com.example.simpleboard.reply.db.ReplyEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +24,15 @@ public class PostEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long boardId;
+    // 이 Annotation을 붙여주면 해당 변수를 Column으로 인식을 한다.
+    // 자동으로 뒤에다가 _id를 붙여주게 된다.
+    @ManyToOne
+    // Object Mapper가 BoardEntity에서 참조를 하고 BoardEntity에서 또 이곳을 참조하고 ... 하는 식으로
+    // 상호 참조가 반복되어서 무한 루프가 돌게되는데 이를 방지하기 위해서 @JsonIgnore를 붙여준다.
+    @JsonIgnore
+    // toString끼리 상호참조로 인한 무한 루프를 방지하기 위해서 사용한다.
+    @ToString.Exclude
+    private BoardEntity board;
     private String userName;
     private String password;
     private String email;
@@ -35,9 +43,7 @@ public class PostEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime postedAt;
-    // Entity Annotation이 붙어있으면 기본적으로 이곳에 선언된 변수들은 DB의 Column으로 인식한다.
-    // Transient Annotation을 붙여주면 DB의 Column으로 인식하지 않는다.(Container 등록시에 무시함)
-    @Transient
+    @OneToMany(mappedBy = "post")
     private List<ReplyEntity> replyList = List.of();
     @Transient
     private Integer replyCount;

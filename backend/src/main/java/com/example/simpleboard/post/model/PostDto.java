@@ -1,10 +1,12 @@
 package com.example.simpleboard.post.model;
 
+import com.example.simpleboard.reply.db.ReplyEntity;
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,18 +18,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PostRequest {
-
-    private Long boardId = 1L;
-    @NotBlank
+public class PostDto {
+    private Long id;
+    private Long boardId;
     private String userName;
-    @NotBlank
-    @Size(max = 4, min = 4)
     private String password;
-    @NotBlank
     private String email;
-    @NotBlank
+    private String status;
     private String title;
-    @NotBlank
     private String content;
+    private LocalDateTime postedAt;
+    private List<ReplyEntity> replyList = List.of();
+    private Integer replyCount;
 }
