@@ -27,9 +27,12 @@ public class PostApiController {
             @Valid
             @RequestBody PostViewRequest postViewRequest
     ) {
-        return postService.view(postViewRequest);
+        var entity = postService.view(postViewRequest);
+        //entity.getReplyList().forEach(it -> {
+        //    // reply에 대한 처리가 가능하다.
+        //});
+        return entity;
     }
-
 
     @GetMapping("all")
     public List<PostDto> list() {

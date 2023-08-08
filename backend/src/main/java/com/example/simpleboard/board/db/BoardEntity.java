@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
@@ -32,5 +34,12 @@ public class BoardEntity {
         // 여기서는 board_id와 1:N의 관계를 맺게 되는 것이다.
         mappedBy = "board"
     )
+    // 여기에 해당하는 값만 가져온다.
+    @Where(
+        clause = "status = 'REGISTERED'"
+    )
+    // 빌더 패턴에서 생성되지 않고 기본 생성자 (List.of())로 생성될 수 있도록 한다.
+    @Builder.Default
+    @OrderBy("id desc") // Hibernate Annotation
     private List<PostEntity> postList = List.of();
 }

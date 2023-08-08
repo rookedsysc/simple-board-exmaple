@@ -41,4 +41,11 @@ public class BoardApiController {
         log.info("result : " + entity);
         return entity;
     }
+
+    @GetMapping("/delete/{id}")
+    public void deleteById(
+            @PathVariable Long id
+    ) {
+        boardService.delete(id);
+    }
 }

@@ -1,25 +1,35 @@
 package com.example.simpleboard.reply.service;
 
 import com.example.simpleboard.post.db.PostEntity;
+import com.example.simpleboard.post.db.PostRepository;
 import com.example.simpleboard.reply.db.ReplyEntity;
 import com.example.simpleboard.reply.db.ReplyRepository;
 import com.example.simpleboard.reply.model.ReplyRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ReplyService {
     private final ReplyRepository replyRepository;
+    private final PostRepository postRepository;
 
-    public void create(
+    public ReplyEntity create(
             ReplyRequest replyRequest
     ) {
+        Optional<PostEntity> postEntity = postRepository.findById(replyRequest.getPostId());
+
+        if(postEntity.isEmpty()) {
+            throw new RuntimeException("게시글이 존재하지 않습니다.");
+        }
+
         ReplyEntity entity = ReplyEntity.builder()
-                .postId(replyRequest.getPostId())
+                .post(postEntity.get())
                 .userName(replyRequest.getUserName())
                 .password(replyRequest.getPassword())
                 .status("REGISTERED")
@@ -28,6 +38,7 @@ public class ReplyService {
                 .repliedAt(LocalDateTime.now())
                 .build();
         replyRepository.save(entity);
+        return entity;
     }
 
     public List<ReplyEntity> findAllByPostId(Long postId) {

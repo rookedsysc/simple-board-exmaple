@@ -20,10 +20,10 @@ public class ReplyApiController {
     private final ReplyService replyService;
 
     @PostMapping("")
-    public void create(
+    public ReplyEntity create(
             @Valid
             @RequestBody ReplyRequest replyRequest
     ) {
-        replyService.create(replyRequest);
+        return replyService.create(replyRequest);
     }
 }

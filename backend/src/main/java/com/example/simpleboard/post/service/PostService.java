@@ -57,8 +57,8 @@ public class PostService {
               }
 
               // 게시글을 불러올 때 Reply도 같이 불러온다.
-              List<ReplyEntity> replyList = replyService.findAllByPostIdAndStatusOrderByIdDesc(it.getId(), "REGISTERED");
-              it.setReplyList(replyList);
+              //List<ReplyEntity> replyList = replyService.findAllByPostIdAndStatusOrderByIdDesc(it.getId(), "REGISTERED");
+              //it.setReplyList(replyList);
               return it;
             }
         )

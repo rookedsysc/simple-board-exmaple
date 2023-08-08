@@ -38,6 +38,10 @@ public class BoardService {
 
         return boardDto;
     }
+
+    public void delete(Long id) {
+        boardRepository.deleteById(id);
+    }
 }
 
 
