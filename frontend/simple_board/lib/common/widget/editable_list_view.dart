@@ -8,7 +8,7 @@ import 'package:simple_board/common/widget/list_item.dart';
 class EditableList<E extends EntityBase<DR>, DR extends RequestBase>  extends StatefulWidget {
   final Widget createPageButton;
   final Widget Function(E, BuildContext) itemDesign;
-  final RepositoryBase<RequestBase, DR, E> repository;
+  final RepositoryBase<E> repository;
 
   const EditableList(
       {super.key,

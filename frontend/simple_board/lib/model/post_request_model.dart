@@ -4,24 +4,24 @@ import 'package:simple_board/common/interface/request_base.dart';
 part 'post_request_model.g.dart';
 
 @JsonSerializable()
-class PostCreateRequest implements RequestBase{
-    @JsonKey(name: 'user_name')
-    String userName;
-    @override
-    String password;
-    String email;
-    String title;
-    String content;
-
+class PostCreateRequest implements RequestBase {
+  @JsonKey(name: 'user_name')
+  String userName;
+  String email;
+  @override
+  String password;
+  String title;
+  String content;
 
   PostCreateRequest({
     required this.userName,
-    required this.password,
     required this.email,
     required this.title,
     required this.content,
+    required this.password,
   });
 
-  factory PostCreateRequest.fromJson(Map<String, dynamic> json) => _$PostCreateRequestFromJson(json);
+  factory PostCreateRequest.fromJson(Map<String, dynamic> json) =>
+      _$PostCreateRequestFromJson(json);
   Map<String, dynamic> toJson() => _$PostCreateRequestToJson(this);
 }

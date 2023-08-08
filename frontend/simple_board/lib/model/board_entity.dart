@@ -1,6 +1,7 @@
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:simple_board/common/interface/request_base.dart';
+import 'package:simple_board/model/board_request_model.dart';
 import 'package:simple_board/model/post_entity.dart';
 
 import '../common/interface/entity_base.dart';
@@ -8,7 +9,7 @@ import '../common/interface/entity_base.dart';
 part 'board_entity.g.dart';
 
 @JsonSerializable()
-class BoardEntity implements EntityBase {
+class BoardEntity implements EntityBase<BoardDeleteModel> {
   double id;
   String boardName;
   @override
@@ -34,8 +35,8 @@ class BoardEntity implements EntityBase {
   String title = "";
 
   @override
-  RequestBase toDeleteRequest() {
-    // TODO: implement toDeleteRequest
-    throw UnimplementedError();
+  BoardDeleteModel toDeleteRequest() {
+    BoardDeleteModel request = BoardDeleteModel(id: id);
+    return request;
   }
 }

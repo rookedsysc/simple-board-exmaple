@@ -19,3 +19,14 @@ class BoardCreateModel implements RequestBase {
   @JsonKey(includeFromJson: false, includeToJson: false)
   String password = "";
 }
+
+class BoardDeleteModel implements RequestBase {
+  final double id;
+  BoardDeleteModel({
+    required this.id,
+  });
+
+  @override
+  String password = "";
+}
+

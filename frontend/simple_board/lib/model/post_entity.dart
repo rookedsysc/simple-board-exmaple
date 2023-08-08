@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:simple_board/common/interface/entity_base.dart';
-import 'package:simple_board/common/interface/request_base.dart';
 import 'package:simple_board/model/post_view_model.dart';
 import 'package:simple_board/model/reply_entity.dart';
 

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_board/common/interface/repository_base.dart';
+import 'package:simple_board/common/interface/request_base.dart';
 import 'package:simple_board/controller/provider/dio_provider.dart';
 import 'package:simple_board/model/post_entity.dart';
 import 'package:simple_board/model/post_request_model.dart';
@@ -15,25 +16,30 @@ PostRepository postRepository(PostRepositoryRef ref) {
   return PostRepository(dio);
 }
 
-class PostRepository implements RepositoryBase<PostCreateRequest, PostViewModel, PostEntity> {
+class PostRepository implements RepositoryBase<PostEntity> {
   final Dio _dio;
   final String _url = 'http://localhost:8080/api/post';
 
   PostRepository(this._dio);
 
   @override
-  Future<void> create(PostCreateRequest request) async {
+  Future<void> create<R extends RequestBase>(R request) async {
+    if (request is PostCreateRequest) {
         try {
       await _dio.post(_url, data: request.toJson());
     } catch (e) {
       debugPrint(e.toString());
     }
+    } else {
+      throw Exception("Post Create Request Type Error");
+    }
   }
 
   @override
-  Future<void> delete(PostViewModel request) async {
+  Future<void> delete<R extends RequestBase>(R request) async {
     try {
-      await _dio.post("$_url/delete", data: request.toJson());
+      PostViewModel postViewModel = request as PostViewModel;
+      await _dio.post("$_url/delete", data: postViewModel.toJson());
     } catch (e) {
       throw Exception(e.toString());
     }
