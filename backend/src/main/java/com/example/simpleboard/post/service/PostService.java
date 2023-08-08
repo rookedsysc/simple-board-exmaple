@@ -1,5 +1,7 @@
 package com.example.simpleboard.post.service;
 
+import com.example.simpleboard.board.common.Api;
+import com.example.simpleboard.board.common.Pagination;
 import com.example.simpleboard.board.db.BoardRepository;
 import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.db.PostRepository;
@@ -9,6 +11,8 @@ import com.example.simpleboard.post.model.PostViewRequest;
 import com.example.simpleboard.reply.db.ReplyEntity;
 import com.example.simpleboard.reply.db.ReplyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -69,21 +73,17 @@ public class PostService {
     return postConverter.toDto(entity);
   }
 
-  public List<PostDto> all() {
-    List<PostEntity> entityList = postRepository.findAll();
-    entityList
-        .stream()
-        .map(it -> {
-          List<ReplyEntity> replyList = replyService.findAllByPostIdAndStatusOrderByIdDesc(it.getId(), "REGISTERED");
-          it.setReplyCount(replyList.size());
-          return it;
-        })
-        .collect(Collectors.toList());
-
-    List<PostDto> dtoList = entityList.stream()
-        .map(it -> postConverter.toDto(it))
-        .collect(Collectors.toList());
-    return dtoList;
+  public Api<List<PostEntity>> all(Pageable pageable) {
+    Page<PostEntity> list = postRepository.findAll(pageable);
+    Pagination pagination = Pagination.builder()
+        .page(list.getNumber())
+        .size(list.getSize())
+        .currentElements(list.getNumberOfElements())
+        .totalElements(list.getTotalElements())
+        .totalPages(list.getTotalPages())
+        .build();
+    Api<List<PostEntity>> response = Api.<List<PostEntity>> builder().pagination(pagination).body(list.toList()).build();
+    return response;
   }
 
   public void delete(PostViewRequest postViewRequest) {
