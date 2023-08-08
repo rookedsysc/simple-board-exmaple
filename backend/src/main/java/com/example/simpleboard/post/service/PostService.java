@@ -82,8 +82,10 @@ public class PostService {
         .totalElements(list.getTotalElements())
         .totalPages(list.getTotalPages())
         .build();
-    Api<List<PostEntity>> response = Api.<List<PostEntity>> builder().pagination(pagination).body(list.toList()).build();
-    return response;
+    return Api.<List<PostEntity>>builder()
+        .pagination(pagination)
+        .body(list.toList())
+        .build();
   }
 
   public void delete(PostViewRequest postViewRequest) {
