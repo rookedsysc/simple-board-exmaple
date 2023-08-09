@@ -1,5 +1,6 @@
 package com.example.simpleboard.board.db;
 
+import com.example.simpleboard.board.common.EntityBase;
 import com.example.simpleboard.post.db.PostEntity;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -21,7 +22,7 @@ import java.util.List;
 @Builder
 @Entity(name = "board") // 테이블 이름
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class BoardEntity {
+public class BoardEntity implements EntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

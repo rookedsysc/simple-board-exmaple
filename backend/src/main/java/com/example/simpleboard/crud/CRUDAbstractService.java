@@ -1,6 +1,7 @@
 package com.example.simpleboard.crud;
 
 import com.example.simpleboard.board.common.Api;
+import com.example.simpleboard.board.common.EntityBase;
 import com.example.simpleboard.board.common.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * dto -> entity -> dto
  */
-public abstract class CRUDAbstractService<DTO, ENTITY> implements CRUDInterface<DTO> {
+public abstract class CRUDAbstractService<DTO, ENTITY extends EntityBase> implements CRUDInterface<DTO> {
   // Autowired(required = false) :
   // 해당 Converter를 상속받은 Bean이 있다면 여기를 채워주고 없다면 넘어가게 된다.
   @Autowired(required = false)
@@ -52,7 +53,11 @@ public abstract class CRUDAbstractService<DTO, ENTITY> implements CRUDInterface<
 
   @Override
   public void delete(Long id) {
-    repository.deleteById(id);
+    ENTITY entity = repository.findById(id).orElseGet(() -> null);
+    if (entity != null) {
+      entity.setStatus("UNREGISTERED");
+      repository.save(entity);
+    }
   }
 
   @Override
