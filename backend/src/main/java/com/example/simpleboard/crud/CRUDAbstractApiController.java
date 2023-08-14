@@ -1,7 +1,7 @@
 package com.example.simpleboard.crud;
 
-import com.example.simpleboard.board.common.Api;
-import com.example.simpleboard.board.common.EntityBase;
+import com.example.simpleboard.common.Api;
+import com.example.simpleboard.common.EntityBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;

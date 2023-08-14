@@ -1,6 +1,6 @@
 package com.example.simpleboard.crud;
 
-import com.example.simpleboard.board.common.Api;
+import com.example.simpleboard.common.Api;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

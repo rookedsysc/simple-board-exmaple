@@ -1,6 +1,6 @@
 package com.example.simpleboard.board.db;
 
-import com.example.simpleboard.board.common.EntityBase;
+import com.example.simpleboard.common.EntityBase;
 import com.example.simpleboard.post.db.PostEntity;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -12,7 +12,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
-import org.springframework.core.annotation.Order;
 
 import java.util.List;
 

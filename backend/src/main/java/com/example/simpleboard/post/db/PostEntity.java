@@ -1,6 +1,6 @@
 package com.example.simpleboard.post.db;
 
-import com.example.simpleboard.board.common.EntityBase;
+import com.example.simpleboard.common.EntityBase;
 import com.example.simpleboard.board.db.BoardEntity;
 import com.example.simpleboard.reply.db.ReplyEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import javax.persistence.*;
 
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,8 +43,4 @@ public class PostEntity implements EntityBase {
     @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime postedAt;
-    @OneToMany(mappedBy = "post")
-    private List<ReplyEntity> replyList = List.of();
-    @Transient
-    private Integer replyCount;
 }

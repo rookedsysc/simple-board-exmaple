@@ -1,12 +1,11 @@
 package com.example.simpleboard.post.service;
 
-import com.example.simpleboard.board.common.Api;
-import com.example.simpleboard.board.common.Pagination;
+import com.example.simpleboard.common.Api;
+import com.example.simpleboard.common.Pagination;
 import com.example.simpleboard.board.db.BoardRepository;
 import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.db.PostRepository;
 import com.example.simpleboard.post.model.PostDto;
-import com.example.simpleboard.post.model.PostRequest;
 import com.example.simpleboard.post.model.PostViewRequest;
 import com.example.simpleboard.reply.db.ReplyRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class PostService {
   private final BoardRepository boardRepository;
   private final PostConverter postConverter;
 
-  public PostDto create(PostRequest postRequest) {
+  public PostDto create(PostDto postRequest) {
     var boardEntity = boardRepository.findById(postRequest.getBoardId())
         .get();
 

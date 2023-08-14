@@ -1,9 +1,8 @@
 package com.example.simpleboard.post.controller;
 
-import com.example.simpleboard.board.common.Api;
+import com.example.simpleboard.common.Api;
 import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.model.PostDto;
-import com.example.simpleboard.post.model.PostRequest;
 import com.example.simpleboard.post.model.PostViewRequest;
 import com.example.simpleboard.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class PostApiController {
     private final PostService postService;
 
     @PostMapping("")
-    public PostDto create(@Valid @RequestBody PostRequest postRequest) {
+    public PostDto create(@Valid @RequestBody PostDto postRequest) {
         return postService.create(postRequest);
     }
 

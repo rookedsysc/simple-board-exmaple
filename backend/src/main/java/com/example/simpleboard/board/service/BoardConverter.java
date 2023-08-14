@@ -11,6 +11,7 @@ import com.example.simpleboard.post.service.PostConverter;
 import com.example.simpleboard.reply.db.ReplyEntity;
 import com.example.simpleboard.reply.model.ReplyDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BoardConverter implements Converter<BoardDto, BoardEntity> {
 
   private final PostConverter postConverter;
@@ -47,7 +49,8 @@ public class BoardConverter implements Converter<BoardDto, BoardEntity> {
       postList = postRepository.findById(boardDto.getId())
           .stream()
           .collect(Collectors.toList());
-    } catch (Exception ignored) {
+    } catch (Exception e) {
+      throw new IllegalArgumentException("BoardConverter Error : postList를 불러오지 못했습니다.");
     }
     BoardEntity boardEntity = BoardEntity.builder()
         .id(getBoardId(boardDto))
@@ -72,7 +75,8 @@ public class BoardConverter implements Converter<BoardDto, BoardEntity> {
             .getId();
 
       } catch (Exception e) {
-        return 0L;
+        log.error("IllegalArgumentException: {}", e.getMessage());
+        throw new IllegalArgumentException("BoardConverter Error : 정렬 실패");
       }
     }
 
@@ -91,9 +95,9 @@ public class BoardConverter implements Converter<BoardDto, BoardEntity> {
             .collect(Collectors.toList());
         return boardEntityList.get(0)
             .getId();
-
       } catch (Exception e) {
-        return 0L;
+        log.error("IllegalArgumentException: {}", e.getMessage());
+        throw new IllegalArgumentException("BoardConverter Error : 정렬 실패");
       }
     }
 

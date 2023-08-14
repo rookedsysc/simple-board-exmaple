@@ -29,35 +29,6 @@ public class BoardService extends CRUDAbstractService<BoardDto, BoardEntity> {
 
     return boardDto;
   }
-    //private final BoardRepository boardRepository;
-    //private final BoardConverter boardConverter;
-    //
-    //public BoardEntity create(
-    //        BoardRequest boardRequest) {
-    //    BoardEntity entity = BoardEntity.builder()
-    //            .boardName(boardRequest.getBoardName())
-    //            .status("REGISTERED")
-    //            .build();
-    //    return boardRepository.save(entity);
-    //}
-    //
-    //public List<BoardDto> findAll() {
-    //    List<BoardEntity> entityList= boardRepository.findAll();
-    //    List<BoardDto> dtoList = entityList.stream().map(it -> boardConverter.toDto(it)).collect(Collectors.toList());
-    //    return dtoList;
-    //}
-    //
-    //public BoardDto view(Long id) {
-    //    BoardEntity entity = boardRepository.findById(id)
-    //        .get();
-    //    BoardDto boardDto = boardConverter.toDto(entity);
-    //
-    //    return boardDto;
-    //}
-    //
-    //public void delete(Long id) {
-    //    boardRepository.deleteById(id);
-    //}
 }
 
 

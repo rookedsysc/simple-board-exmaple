@@ -1,4 +1,4 @@
-package com.example.simpleboard.board.common;
+package com.example.simpleboard.common;
 
 import lombok.Getter;
 import lombok.Setter;

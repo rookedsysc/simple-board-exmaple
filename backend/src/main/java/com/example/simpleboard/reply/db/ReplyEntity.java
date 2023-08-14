@@ -1,6 +1,6 @@
 package com.example.simpleboard.reply.db;
 
-import com.example.simpleboard.board.common.EntityBase;
+import com.example.simpleboard.common.EntityBase;
 import com.example.simpleboard.post.db.PostEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
