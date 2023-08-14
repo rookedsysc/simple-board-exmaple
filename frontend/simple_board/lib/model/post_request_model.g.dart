@@ -17,9 +17,9 @@ PostCreateRequest _$PostCreateRequestFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$PostCreateRequestToJson(PostCreateRequest instance) =>
     <String, dynamic>{
-      'password': instance.password,
       'user_name': instance.userName,
       'email': instance.email,
+      'password': instance.password,
       'title': instance.title,
       'content': instance.content,
     };
