@@ -7,8 +7,8 @@ part 'cursor_pagination_model.g.dart';
   genericArgumentFactories: true,
 )
 // 외부에서 generic을 지정해주기 위해 <T>를 사용
-class CursorPagination<T> {
-  final CursorPagination meta;
+class CursorPagination<T, C extends CursorPaginationMetaBase> {
+  final C meta;
   final List<T> data;
 
   CursorPagination({
@@ -16,13 +16,16 @@ class CursorPagination<T> {
     required this.data,
   });
 
-  factory CursorPagination.fromJson(Map<String, dynamic> json, T Function(Object? json) fromJsonT) => _$CursorPaginationFromJson(json, fromJsonT);
+  factory CursorPagination.fromJson(
+          Map<String, dynamic> json, T Function(Object? json) fromJsonT) =>
+      _$CursorPaginationFromJson(json, fromJsonT);
   // 여기서 의미하는 THIS는 instance를 의미
-  Map<String, dynamic> toJson(Object? Function(T value) toJsonT) => _$CursorPaginationToJson(this, toJsonT);
+  Map<String, dynamic> toJson(Object? Function(T value) toJsonT) =>
+      _$CursorPaginationToJson(this, toJsonT);
 }
 
 @JsonSerializable()
-class CursorPaginationMeta {
+class CursorPaginationResponseMeta extends CursorPaginationMetaBase {
   final int count;
   final int size;
   @JsonKey(name: 'current_elements')
@@ -32,11 +35,32 @@ class CursorPaginationMeta {
   @JsonKey(name: 'total_elements')
   final double totalElements;
 
-  CursorPaginationMeta(this.currentElements, this.totalPages, this.totalElements, {
-    required this.count,
-    required this.size,
+  CursorPaginationResponseMeta({
+    required this.currentElements,
+    required this.totalPages,
+    required this.totalElements,
+    this.count = 0,
+    this.size = 20,
   });
 
-  factory CursorPaginationMeta.fromJson(Map<String, dynamic> json) => _$CursorPaginationMetaFromJson(json);
-  Map<String, dynamic> toJson() => _$CursorPaginationMetaToJson(this);
+  factory CursorPaginationResponseMeta.fromJson(Map<String, dynamic> json) =>
+      _$CursorPaginationResponseMetaFromJson(json);
+  Map<String, dynamic> toJson() => _$CursorPaginationResponseMetaToJson(this);
 }
+
+@JsonSerializable()
+class CursorPaginationRequestMeta extends CursorPaginationMetaBase {
+  final int count;
+  final int size;
+
+  CursorPaginationRequestMeta({
+    this.count = 0,
+    this.size = 20,
+  });
+
+  factory CursorPaginationRequestMeta.fromJson(Map<String, dynamic> json) =>
+      _$CursorPaginationRequestMetaFromJson(json);
+  Map<String, dynamic> toJson() => _$CursorPaginationRequestMetaToJson(this);
+}
+
+abstract class CursorPaginationMetaBase {}
