@@ -1,7 +1,7 @@
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:simple_board/common/interface/request_base.dart';
-import 'package:simple_board/model/board_request_model.dart';
+import 'package:simple_board/model/board_request_dto.dart';
 import 'package:simple_board/model/post_entity.dart';
 
 import '../common/interface/entity_base.dart';

@@ -1,12 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:simple_board/common/interface/entity_base.dart';
-import 'package:simple_board/model/post_view_model.dart';
+import 'package:simple_board/model/post_request_dto.dart';
 import 'package:simple_board/model/reply_entity.dart';
 
 part 'post_entity.g.dart';
 
 @JsonSerializable()
-class PostEntity implements EntityBase<PostViewModel> {
+class PostEntity implements EntityBase<PostDeleteDTO> {
   final double id;
   @JsonKey(name: 'board_id')
   final double boardId;
@@ -72,8 +72,8 @@ class PostEntity implements EntityBase<PostViewModel> {
   Map<String, dynamic> toJson() => _$PostEntityToJson(this);
 
   @override
-  PostViewModel toDeleteRequest() {
-    PostViewModel request = PostViewModel(postId: id, password: password);
+  PostDeleteDTO toDeleteRequest() {
+    PostDeleteDTO request = PostDeleteDTO(postId: id, password: password);
     return request;
   }
 }

@@ -1,13 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'post_request_model.dart';
+part of 'post_request_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PostCreateRequest _$PostCreateRequestFromJson(Map<String, dynamic> json) =>
-    PostCreateRequest(
+PostDeleteDTO _$PostDeleteDTOFromJson(Map<String, dynamic> json) =>
+    PostDeleteDTO(
+      postId: (json['post_id'] as num).toDouble(),
+      password: json['password'] as String,
+    );
+
+Map<String, dynamic> _$PostDeleteDTOToJson(PostDeleteDTO instance) =>
+    <String, dynamic>{
+      'post_id': instance.postId,
+      'password': instance.password,
+    };
+
+PostCreateDTO _$PostCreateDTOFromJson(Map<String, dynamic> json) =>
+    PostCreateDTO(
       userName: json['user_name'] as String,
       email: json['email'] as String,
       title: json['title'] as String,
@@ -15,7 +27,7 @@ PostCreateRequest _$PostCreateRequestFromJson(Map<String, dynamic> json) =>
       password: json['password'] as String,
     );
 
-Map<String, dynamic> _$PostCreateRequestToJson(PostCreateRequest instance) =>
+Map<String, dynamic> _$PostCreateDTOToJson(PostCreateDTO instance) =>
     <String, dynamic>{
       'user_name': instance.userName,
       'email': instance.email,
