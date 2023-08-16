@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:simple_board/common/interface/entity_base.dart';
 import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/common/widget/editable_list_view.dart';
-import 'package:simple_board/controller/repository/post_repository.dart';
+import 'package:simple_board/controller/service/post_service.dart';
 import 'package:simple_board/model/post_entity.dart';
-import 'package:simple_board/model/post_view_model.dart';
-import 'package:simple_board/view/widget/post_create_button.dart';
 
 class PostPage extends ConsumerWidget {
   static const String routeName = '/';
@@ -13,10 +12,13 @@ class PostPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return EditableList<PostEntity, PostViewModel>(
-      createPageButton: const PostCreateButton(),
-      itemDesign: _item,
-      repository: ref.watch(postRepositoryProvider),
+    return Scaffold(
+      body: PaginationListView<PostEntity>(
+        provider: postService,
+        itemBuilder: (<PostEntity>(_, index, model) {
+          return _item(model, context);
+        }),
+      ),
     );
   }
 

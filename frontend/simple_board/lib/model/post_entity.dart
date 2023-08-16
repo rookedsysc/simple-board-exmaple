@@ -6,7 +6,7 @@ import 'package:simple_board/model/reply_entity.dart';
 part 'post_entity.g.dart';
 
 @JsonSerializable()
-class PostEntity implements EntityBase<PostDeleteDTO> {
+class PostEntity implements EntityBase {
   final double id;
   @JsonKey(name: 'board_id')
   final double boardId;
@@ -16,14 +16,11 @@ class PostEntity implements EntityBase<PostDeleteDTO> {
   String password;
   final String email;
   @override
-  String status;
-  @override
   String title;
   final String? content;
+  final List<ReplyEntity>? replies;
   @JsonKey(name: 'posted_at')
   final DateTime postedAt;
-  final List<ReplyEntity>? replies;
-  final int? replyCount;
 
   PostEntity copyWith({
     double? id,
@@ -31,12 +28,11 @@ class PostEntity implements EntityBase<PostDeleteDTO> {
     String? userName,
     String? password,
     String? email,
-    String? status,
     String? title,
     String? content,
-    DateTime? postedAt,
+    DateTime? createdAt,
     List<ReplyEntity>? replies,
-    int? replyCount,
+    DateTime? postedAt,
   }) {
     return PostEntity(
       id: id ?? this.id,
@@ -44,12 +40,10 @@ class PostEntity implements EntityBase<PostDeleteDTO> {
       userName: userName ?? this.userName,
       password: password ?? this.password,
       email: email ?? this.email,
-      status: status ?? this.status,
       title: title ?? this.title,
       content: content ?? this.content,
-      postedAt: postedAt ?? this.postedAt,
       replies: replies ?? this.replies,
-      replyCount: replyCount ?? this.replyCount,
+      postedAt: postedAt ?? this.postedAt,
     );
   }
 
@@ -59,19 +53,16 @@ class PostEntity implements EntityBase<PostDeleteDTO> {
     required this.userName,
     required this.password,
     required this.email,
-    required this.status,
     required this.title,
     required this.content,
     required this.postedAt,
-    required this.replies,
-    required this.replyCount,
+    this.replies,
   });
 
   factory PostEntity.fromJson(Map<String, dynamic> json) =>
       _$PostEntityFromJson(json);
   Map<String, dynamic> toJson() => _$PostEntityToJson(this);
 
-  @override
   PostDeleteDTO toDeleteRequest() {
     PostDeleteDTO request = PostDeleteDTO(postId: id, password: password);
     return request;

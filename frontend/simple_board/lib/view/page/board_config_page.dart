@@ -7,7 +7,7 @@ import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/common/widget/padding_factory.dart';
 import 'package:simple_board/common/widget/plain_text_widget.dart';
 import 'package:simple_board/controller/repository/board_repository.dart';
-import 'package:simple_board/model/board_request_model.dart';
+import 'package:simple_board/model/board_request_dto.dart';
 import 'package:simple_board/view/page/post_config_page.dart';
 
 part 'board_config_page.g.dart';

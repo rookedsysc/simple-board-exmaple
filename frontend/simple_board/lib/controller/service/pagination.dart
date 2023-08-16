@@ -1,15 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_board/common/interface/entity_base.dart';
 import 'package:simple_board/common/interface/repository_base.dart';
 import 'package:simple_board/common/model/pagination_model.dart';
 import 'package:simple_board/common/model/pagination_params.dart';
 
-class PaginationProvider<E extends EntityBase,
+abstract class Pagination<E extends EntityBase,
         R extends RepositoryBase<E, CursorPagination<E>>>
     extends StateNotifier<CursorPaginationBase> {
   final RepositoryBase<E, CursorPagination<E>> _repository;
-  PaginationProvider(
-      {required RepositoryBase<E, CursorPagination<E>> repository})
+  Pagination({required RepositoryBase<E, CursorPagination<E>> repository})
       : _repository = repository,
         super(CursorPaginationLoading()) {
     paginate();
@@ -53,7 +53,8 @@ class PaginationProvider<E extends EntityBase,
       } else {
         state = resp;
       }
-    } catch (e) {
+    } catch (e, stack) {
+      debugPrint(stack.toString());
       state = CursorPaginationError(
           message: "Error while paginating: ${e.toString()}");
     }
