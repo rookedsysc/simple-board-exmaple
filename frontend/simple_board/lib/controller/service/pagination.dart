@@ -1,3 +1,4 @@
+import 'package:debounce_throttle/debounce_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_board/common/interface/entity_base.dart';
@@ -9,10 +10,19 @@ abstract class Pagination<E extends EntityBase,
         R extends RepositoryBase<E, CursorPagination<E>>>
     extends StateNotifier<CursorPaginationBase> {
   final RepositoryBase<E, CursorPagination<E>> _repository;
+  final paginationThrottle = Throttle(
+    const Duration(seconds: 1),
+    initialValue:
+        _PaginationInfo(size: 20, fetchMore: false, forceRefetch: false),
+  );
+
   Pagination({required RepositoryBase<E, CursorPagination<E>> repository})
       : _repository = repository,
         super(CursorPaginationLoading()) {
     paginate();
+    paginationThrottle.values.listen((value) {
+      _throttlePaginate(value);
+    });
   }
 
   Future<void> paginate({
@@ -20,8 +30,16 @@ abstract class Pagination<E extends EntityBase,
     bool fetchMore = false,
     bool forceRefetch = false,
   }) async {
+    paginationThrottle.setValue(_PaginationInfo(
+      fetchMore: fetchMore,
+      forceRefetch: forceRefetch,
+      size: size,
+    ));
+  } // paginate
+
+  Future<void> _throttlePaginate(_PaginationInfo info) async {
     try {
-      if (state is CursorPagination && !forceRefetch) {
+      if (state is CursorPagination && !info.forceRefetch) {
         final pState = state as CursorPagination<E>;
 
         if (!_hasMore()) {
@@ -30,17 +48,17 @@ abstract class Pagination<E extends EntityBase,
       }
 
       // 데이터가 로딩 중인 상태
-      if (fetchMore && (_isLoading())) {
+      if (info.fetchMore && (_isLoading())) {
         return;
       }
 
       // Pagination Params 생성
       PaginationParams paginationParams = PaginationParams(page: 0);
 
-      if (fetchMore) {
+      if (info.fetchMore) {
         paginationParams = _fetchMore(paginationParams);
       } else {
-        _fetchFirst(forceRefetch);
+        _fetchFirst(info.forceRefetch);
       }
 
       final resp = await _repository.paginate(paginationParams);
@@ -101,4 +119,14 @@ abstract class Pagination<E extends EntityBase,
       state = CursorPaginationLoading();
     }
   }
+}
+
+class _PaginationInfo {
+  final int size;
+  final bool fetchMore;
+  final bool forceRefetch;
+  _PaginationInfo(
+      {required this.size,
+      required this.fetchMore,
+      required this.forceRefetch});
 }
