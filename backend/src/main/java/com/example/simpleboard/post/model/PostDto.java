@@ -15,6 +15,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -23,6 +24,7 @@ import java.util.List;
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PostDto {
+    private Long id;
     private Long boardId = 1L;
     @NotBlank
     private String userName;
@@ -39,5 +41,5 @@ public class PostDto {
     private List<ReplyEntity> replyList = List.of();
     @Transient
     private Integer replyCount;
-
+    private LocalDateTime postedAt;
 }
