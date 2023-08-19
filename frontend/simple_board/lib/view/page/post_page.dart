@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/common/widget/editable_list_view.dart';
@@ -17,12 +18,7 @@ class PostPage extends ConsumerWidget {
     return CupertinoScaffold(
       body: Scaffold(
         floatingActionButton: const PostCreateButton(),
-        appBar: AppBar(
-          title: Text(
-            'Post',
-            style: Theme.of(context).textTheme.bodyLarge!,
-          ),
-        ),
+        appBar: _appBar(context),
         body: PaginationListView<PostEntity>(
           provider: postService,
           itemBuilder: (<PostEntity>(_, index, model) {
@@ -31,6 +27,24 @@ class PostPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  AppBar _appBar(BuildContext context) {
+    return AppBar(
+        title: Text(
+          'Post',
+          style: Theme.of(context).textTheme.bodyLarge!,
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: Theme.of(context).primaryColor,
+          ),
+          onPressed: () {
+            context.pop();
+          },
+        )
+      );
   }
 
   Widget _item(PostEntity entity, BuildContext context) {

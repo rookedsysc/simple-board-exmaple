@@ -9,7 +9,6 @@ import 'package:simple_board/controller/service/board_service.dart';
 import 'package:simple_board/controller/service/post_service.dart';
 import 'package:simple_board/model/board_entity.dart';
 import 'package:simple_board/view/page/board_config_page.dart';
-import 'package:simple_board/view/page/post_config_page.dart';
 import 'package:simple_board/view/page/post_page.dart';
 
 class BoardPage extends StatelessWidget {
@@ -20,6 +19,7 @@ class BoardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoScaffold(
       body: Scaffold(
+        appBar: _appBar(context),
         floatingActionButton: const _GoToBoardConfigPageButton(),
         body: PaginationListView(
           provider: boardService,
@@ -30,7 +30,17 @@ class BoardPage extends StatelessWidget {
       ),
     );
   }
+
+  AppBar _appBar(BuildContext context) {
+    return AppBar(
+        title: Text(
+          'Board List',
+          style: Theme.of(context).textTheme.bodyLarge!,
+        ),
+      );
+  }
 }
+
 
 class _Item extends ConsumerWidget {
   final BoardEntity model;
@@ -42,8 +52,10 @@ class _Item extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         ref.read(boardIdProvider.notifier).state = model.id.toInt();
+        debugPrint(
+            "boardIdProvider: ${ref.read(boardIdProvider.notifier).state}");
         context.push("/${PostPage.routeName}/${model.id}");
       },
       child: ComponentCard(

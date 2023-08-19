@@ -5,7 +5,7 @@ import 'package:simple_board/controller/service/pagination.dart';
 import 'package:simple_board/model/board_entity.dart';
 import 'package:simple_board/model/board_request_dto.dart';
 
-final boardService = StateNotifierProvider<Pagination<BoardEntity,BoardRepository>, CursorPaginationBase>((ref) {
+final boardService = StateNotifierProvider.autoDispose<Pagination<BoardEntity,BoardRepository>, CursorPaginationBase>((ref) {
   return BoardService(boardRepository: ref.read(boardRepositoryProvider));
 });
 

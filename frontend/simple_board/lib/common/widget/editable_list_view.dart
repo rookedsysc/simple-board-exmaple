@@ -9,7 +9,7 @@ typedef PaginationWidgetBuilder<E extends EntityBase> = Widget Function(
     BuildContext context, int index, E model);
 
 class PaginationListView<E extends EntityBase> extends ConsumerStatefulWidget {
-  final StateNotifierProvider<Pagination, CursorPaginationBase>
+  final AutoDisposeStateNotifierProvider<Pagination, CursorPaginationBase>
       provider;
   final PaginationWidgetBuilder<E> itemBuilder;
   const PaginationListView(
@@ -39,6 +39,7 @@ class PaginationListViewState<E extends EntityBase> extends ConsumerState<Pagina
     controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(widget.provider);

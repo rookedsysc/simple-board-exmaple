@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_board/common/interface/entity_base.dart';
+import 'package:simple_board/common/interface/pagination_provider_base.dart';
 import 'package:simple_board/common/interface/repository_base.dart';
 import 'package:simple_board/common/model/pagination_model.dart';
 import 'package:simple_board/common/model/pagination_params.dart';
