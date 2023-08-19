@@ -27,15 +27,20 @@ public class PostService extends CRUDAbstractService<PostDto, PostEntity> {
   private final PostConverter postConverter;
 
   public Api<List<PostDto>> findByBoardId(Long boardId, Pageable pageable) {
-    Api<List<PostEntity>> postApi = postRepository.findByBoard_Id(boardId, pageable);
-    List<PostDto> postDto =     postApi.getBody().stream().map(it -> {
-      return postConverter.toDto(it);
+   Page<PostEntity> postPage = postRepository.findByBoard_Id(boardId, pageable);
+       Pagination pagination = Pagination.builder()
+        .page(postPage.getNumber())
+        .size(postPage.getSize())
+        .currentElements(postPage.getNumberOfElements())
+        .totalElements(postPage.getTotalElements())
+        .totalPages(postPage.getTotalPages())
+        .build();
+
+    List<PostDto> postDtoList = postPage.stream().map(entity -> {
+      return postConverter.toDto(entity);
     }).collect(Collectors.toList());
 
-    Api<List<PostDto>> postDtoApi = Api.<List<PostDto>>builder()
-        .body(postDto).pagination(postApi.getPagination())
-        .build();
-    return postDtoApi;
+    return Api.<List<PostDto>>builder().body(postDtoList).pagination(pagination).build();
   }
 
 }
