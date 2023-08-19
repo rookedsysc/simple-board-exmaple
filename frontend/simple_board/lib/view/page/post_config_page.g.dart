@@ -6,11 +6,11 @@ part of 'post_config_page.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$postConfigPageHash() => r'3d3e94bfe67a2e64c87382934c2e771869b8fa2a';
+String _$postConfigPageHash() => r'b734fac57ae34b8eab4750cfee966d40941003a8';
 
 /// See also [postConfigPage].
 @ProviderFor(postConfigPage)
-final postConfigPageProvider = AutoDisposeProvider<PostCreateRequest>.internal(
+final postConfigPageProvider = AutoDisposeProvider<PostCreateDTO>.internal(
   postConfigPage,
   name: r'postConfigPageProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -20,6 +20,6 @@ final postConfigPageProvider = AutoDisposeProvider<PostCreateRequest>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef PostConfigPageRef = AutoDisposeProviderRef<PostCreateRequest>;
+typedef PostConfigPageRef = AutoDisposeProviderRef<PostCreateDTO>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

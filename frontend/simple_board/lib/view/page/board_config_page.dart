@@ -7,7 +7,7 @@ import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/common/widget/padding_factory.dart';
 import 'package:simple_board/common/widget/plain_text_widget.dart';
 import 'package:simple_board/controller/repository/board_repository.dart';
-import 'package:simple_board/model/board_request_model.dart';
+import 'package:simple_board/model/board_request_dto.dart';
 import 'package:simple_board/view/page/post_config_page.dart';
 
 part 'board_config_page.g.dart';
@@ -25,7 +25,10 @@ class BoardConfigPage extends ConsumerWidget {
       body: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, color: Theme.of(context).primaryColor,),
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: Theme.of(context).primaryColor,
+            ),
             onPressed: () {
               context.pop();
             },
@@ -64,27 +67,27 @@ class BoardConfigPage extends ConsumerWidget {
     );
   }
 
-    Widget _saveButton(BuildContext context, WidgetRef ref) {
+  Widget _saveButton(BuildContext context, WidgetRef ref) {
     return OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(color: Theme.of(context).primaryColor),
-        ),
-        onPressed: () async {
-          if (_boardConfigKey.currentState!.validate()) {
-            _boardConfigKey.currentState!.save();
-            BoardCreateModel request = ref.read(boardConfigPageProvider);
-            await ref.read(boardRepositoryProvider).create(request);
-            if (context.mounted) {
-              context.pop();
-            }
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(color: Theme.of(context).primaryColor),
+      ),
+      onPressed: () async {
+        if (_boardConfigKey.currentState!.validate()) {
+          _boardConfigKey.currentState!.save();
+          BoardCreateModel request = ref.read(boardConfigPageProvider);
+          await ref.read(boardRepositoryProvider).create(request);
+          if (context.mounted) {
+            context.pop();
           }
-        },
-        child: Text(
-          'Save',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ));
+        }
+      },
+      child: Text(
+        'Save',
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
   }
-
 }
 
 @riverpod

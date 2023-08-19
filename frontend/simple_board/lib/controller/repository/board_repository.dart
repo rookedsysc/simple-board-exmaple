@@ -1,65 +1,37 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_board/common/interface/repository_base.dart';
-import 'package:simple_board/common/interface/request_base.dart';
+import 'package:simple_board/common/model/pagination_model.dart';
+import 'package:simple_board/common/model/pagination_params.dart';
 import 'package:simple_board/controller/provider/dio_provider.dart';
 import 'package:simple_board/model/board_entity.dart';
-import 'package:simple_board/model/board_request_model.dart';
 
 part 'board_repository.g.dart';
 
 @riverpod
 BoardRepository boardRepository(BoardRepositoryRef ref) {
   final Dio dio = ref.read(dioProvider);
-  return BoardRepository(dio);
+  return BoardRepository(dio, baseUrl: "http://localhost:8080/api/board");
 }
 
-class BoardRepository implements RepositoryBase<BoardEntity> {
-  final Dio _dio;
-  final String _url = 'http://localhost:8080/api/board';
-  BoardRepository(this._dio);
+@RestApi()
+abstract class BoardRepository
+    extends RepositoryBase<BoardEntity, CursorPagination<BoardEntity>> {
+  factory BoardRepository(Dio dio, {String baseUrl}) = _BoardRepository;
 
   @override
-  Future<void> create<R extends RequestBase>(R request) async {
-    if (R is BoardCreateModel) {
-      try {
-        BoardCreateModel boardCreateModel = request as BoardCreateModel;
-        await _dio.post(_url, data: boardCreateModel.toJson());
-      } catch (e) {
-        throw Exception(e.toString());
-      }
-    } else {
-      throw Exception("Board Create Request Type Error");
-    }
-  }
-
+  @POST("")
+  Future<void> create<BoardCreateModel>(@Body()BoardCreateModel request);
   @override
-  Future<void> delete<R extends RequestBase>(R request) async {
-    try {
-      BoardDeleteModel boardDeleteModel = request as BoardDeleteModel;
-      await _dio.post("$_url/delete/${boardDeleteModel.id}");
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
+  @GET("/all")
+  Future<CursorPagination<BoardEntity>> paginate(@Queries() PaginationParams? params);
   @override
-  Future<BoardEntity> get(double id) {
-    // TODO: implement get
-    throw UnimplementedError();
-  }
-
+  @GET("/id/{id}")
+  Future<BoardEntity> get(@Path() double id);
   @override
-  Future<List<BoardEntity>> getAll() async {
-    final Response resp = await _dio.get('$_url/all');
-    List<BoardEntity> result = [];
-    try {
-      List data = resp.data as List;
-      result = data.map((e) => BoardEntity.fromJson(e)).toList();
-    } catch (e) {
-      debugPrint("\n Get All Board Error : $e");
-    }
-    return result;
-  }
+  @DELETE("/delete/{id}")
+  Future<void> delete<double>(@Path() double request);
 }
+
+

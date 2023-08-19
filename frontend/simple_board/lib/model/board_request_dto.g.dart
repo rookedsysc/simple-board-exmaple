@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'board_request_model.dart';
+part of 'board_request_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -9,8 +7,9 @@ import 'package:simple_board/common/widget/plain_text_widget.dart';
 import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/common/widget/padding_factory.dart';
 import 'package:simple_board/controller/repository/post_repository.dart';
-import 'package:simple_board/model/post_entity.dart';
-import 'package:simple_board/model/post_request_model.dart';
+import 'package:simple_board/controller/service/post_service.dart';
+import 'package:simple_board/model/post_request_dto.dart';
+
 part 'post_config_page.g.dart';
 
 final GlobalKey<FormState> _postConfigKey = GlobalKey<FormState>();
@@ -135,7 +134,7 @@ class PostConfigPage extends ConsumerWidget {
         onPressed: () async {
           if (_postConfigKey.currentState!.validate()) {
             _postConfigKey.currentState!.save();
-            PostCreateRequest request = ref.read(postConfigPageProvider);
+            PostCreateDTO request = ref.read(postConfigPageProvider);
             await ref.read(postRepositoryProvider).create(request);
             if (context.mounted) {
               context.pop();
@@ -150,8 +149,8 @@ class PostConfigPage extends ConsumerWidget {
 }
 
 @riverpod
-PostCreateRequest postConfigPage(PostConfigPageRef ref) {
-  return PostCreateRequest(
+PostCreateDTO postConfigPage(PostConfigPageRef ref) {
+  return PostCreateDTO(
     content: 'Content',
     email: 'Email',
     password: 'Password 4자리 숫자',

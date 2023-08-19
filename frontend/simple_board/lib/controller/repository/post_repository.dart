@@ -1,67 +1,41 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_board/common/interface/repository_base.dart';
-import 'package:simple_board/common/interface/request_base.dart';
+import 'package:simple_board/common/model/pagination_model.dart';
+import 'package:simple_board/common/model/pagination_params.dart';
 import 'package:simple_board/controller/provider/dio_provider.dart';
 import 'package:simple_board/model/post_entity.dart';
-import 'package:simple_board/model/post_request_model.dart';
-import 'package:simple_board/model/post_view_model.dart';
 
 part 'post_repository.g.dart';
 
 @riverpod
 PostRepository postRepository(PostRepositoryRef ref) {
   final Dio dio = ref.read(dioProvider);
-  return PostRepository(dio);
+
+  return PostRepository(dio, baseUrl: "http://localhost:8080/api/post");
 }
 
-class PostRepository implements RepositoryBase<PostEntity> {
-  final Dio _dio;
-  final String _url = 'http://localhost:8080/api/post';
-
-  PostRepository(this._dio);
-
-  @override
-  Future<void> create<R extends RequestBase>(R request) async {
-    if (request is PostCreateRequest) {
-        try {
-      await _dio.post(_url, data: request.toJson());
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    } else {
-      throw Exception("Post Create Request Type Error");
-    }
-  }
+@RestApi()
+abstract class PostRepository
+    extends RepositoryBase<PostEntity, CursorPagination<PostEntity>> {
+  factory PostRepository(Dio dio, {String baseUrl}) = _PostRepository;
 
   @override
-  Future<void> delete<R extends RequestBase>(R request) async {
-    try {
-      PostViewModel postViewModel = request as PostViewModel;
-      await _dio.post("$_url/delete", data: postViewModel.toJson());
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
+  @POST("")
+  Future<void> create<PostCreateModel>(@Body()PostCreateModel request);
   @override
-  Future<PostEntity> get(double id) {
-    // TODO: implement get
-    throw UnimplementedError();
-  }
-
+  @GET("/all")
+  Future<CursorPagination<PostEntity>> paginate(@Queries() PaginationParams? params);
   @override
-  Future<List<PostEntity>> getAll() async {
-        final Response resp = await _dio.get('$_url/all');
-    List<PostEntity> result = [];
-    try {
-      debugPrint(resp.data.toString());
-      List<dynamic> data = resp.data as List;
-      result = data.map((e) => PostEntity.fromJson(e)).toList();
-    } catch (e) {
-      debugPrint("\n Get All Post Error : $e");
-    }
-    return result;
-  }
+  @GET("/id/{id}")
+  Future<PostEntity> get(@Path() double id);
+  @override
+  @DELETE("/delete/{id}")
+  Future<void> delete<double>(@Path() double request);
+  @GET("/board/{id}")
+  Future<CursorPagination<PostEntity>> getPostListByBoardId(
+    @Path() int id,
+    @Queries() PaginationParams? params
+  );
 }

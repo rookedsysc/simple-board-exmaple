@@ -8,7 +8,7 @@ class ListItem<E extends EntityBase, R extends RequestBase>
     extends StatelessWidget {
   final Widget widgetDesign;
   final bool isEditing;
-  final RepositoryBase reposiotry;
+  final RepositoryRegacyBase reposiotry;
   final R request;
   const ListItem(
       {required this.widgetDesign,

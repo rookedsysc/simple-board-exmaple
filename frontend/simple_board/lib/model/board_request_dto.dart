@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:simple_board/common/interface/request_base.dart';
 
-part 'board_request_model.g.dart';
+part 'board_request_dto.g.dart';
 
 @JsonSerializable()
 class BoardCreateModel implements RequestBase {

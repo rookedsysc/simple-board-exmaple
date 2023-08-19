@@ -7,7 +7,7 @@ import 'package:simple_board/common/widget/plain_text_widget.dart';
 
 class DeleteButton<R extends RequestBase> extends ConsumerWidget {
   final R request;
-  final RepositoryBase repository;
+  final RepositoryRegacyBase repository;
   const DeleteButton({
     super.key,
     required this.request,
