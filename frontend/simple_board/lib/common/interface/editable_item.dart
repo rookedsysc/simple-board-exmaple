@@ -30,24 +30,25 @@ abstract class EditableItem extends ConsumerWidget {
         builder: (context) {
           List<CupertinoActionSheetAction> actions = [];
 
-          ///# Delete Button
-          if (onDeletePress != null) {
+          if (onEditPress != null) {
             actions.add(
               CupertinoActionSheetAction(
-                onPressed: onDeletePress!,
+                onPressed: onEditPress!,
                 child: Text(
-                  'Delete',
-                  style: appTheme.textTheme.bodyMedium
-                      ?.copyWith(fontSize: fontSize, color: Colors.red),
+                  'Edit',
+                  style: appTheme.textTheme.bodyMedium?.copyWith(
+                      fontSize: fontSize,
+                      color: Theme.of(context).primaryColor),
                 ),
               ),
             );
           }
 
-          if (onEditPress != null) {
+          ///# Delete Button
+          if (onDeletePress != null) {
             actions.add(
               CupertinoActionSheetAction(
-                onPressed: onEditPress!,
+                onPressed: onDeletePress!,
                 child: Text(
                   'Delete',
                   style: appTheme.textTheme.bodyMedium
