@@ -1,22 +1,26 @@
 import 'package:debounce_throttle/debounce_throttle.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_board/common/interface/entity_base.dart';
 import 'package:simple_board/common/interface/repository_base.dart';
 import 'package:simple_board/common/model/pagination_model.dart';
 import 'package:simple_board/common/model/pagination_params.dart';
+import 'package:simple_board/controller/repository/post_repository.dart';
 
 abstract class Pagination<E extends EntityBase,
         R extends RepositoryBase<E, CursorPagination<E>>>
     extends StateNotifier<CursorPaginationBase> {
+
   final RepositoryBase<E, CursorPagination<E>> _repository;
-  final paginationThrottle = Throttle(
+  final int? boardId;
+  final Throttle paginationThrottle = Throttle(
     const Duration(seconds: 1),
     initialValue:
-        _PaginationInfo(size: 20, fetchMore: false, forceRefetch: false),
+        PaginationInfo(size: 20, fetchMore: false, forceRefetch: false),
   );
 
-  Pagination({required RepositoryBase<E, CursorPagination<E>> repository})
+  Pagination({this.boardId,required RepositoryBase<E, CursorPagination<E>> repository})
       : _repository = repository,
         super(CursorPaginationLoading()) {
     paginate();
@@ -26,18 +30,18 @@ abstract class Pagination<E extends EntityBase,
   }
 
   Future<void> paginate({
-    int size = 20,
     bool fetchMore = false,
     bool forceRefetch = false,
+    int size = 20,
   }) async {
-    paginationThrottle.setValue(_PaginationInfo(
+    paginationThrottle.setValue(PaginationInfo(
       fetchMore: fetchMore,
       forceRefetch: forceRefetch,
       size: size,
     ));
   } // paginate
 
-  Future<void> _throttlePaginate(_PaginationInfo info) async {
+  Future<void> _throttlePaginate(PaginationInfo info) async {
     try {
       if (state is CursorPagination && !info.forceRefetch) {
         final pState = state as CursorPagination<E>;
@@ -61,7 +65,27 @@ abstract class Pagination<E extends EntityBase,
         _fetchFirst(info.forceRefetch);
       }
 
-      final resp = await _repository.paginate(paginationParams);
+      late final resp;
+
+      if (boardId != null && _repository is PostRepository) {
+        final postRepository = _repository as PostRepository;
+        try {
+          resp = await postRepository.getPostListByBoardId(
+              boardId!, paginationParams);
+        } on DioException catch (e) {
+          throw Exception("Pagination Error ${e.response?.data}");
+        } catch (e) {
+          throw Exception("Pagination Error ${e.toString}");
+        }
+      } else {
+        try {
+          resp = await _repository.paginate(paginationParams);
+        } on DioException catch (e) {
+          throw Exception("Pagination Error ${e.message}");
+        } catch (e) {
+          throw Exception("Pagination Error ${e.toString}");
+        }
+      }
 
       if (state is CursorPaginationFetchingMore) {
         final pState = state as CursorPaginationFetchingMore<E>;
@@ -74,9 +98,9 @@ abstract class Pagination<E extends EntityBase,
     } catch (e, stack) {
       debugPrint(stack.toString());
       state = CursorPaginationError(
-          message: "Error while paginating: ${e.toString()}");
+          message: e.toString());
     }
-  }
+  } // _throttlePaginate
 
   bool _hasMore() {
     if (state is CursorPagination) {
@@ -121,12 +145,10 @@ abstract class Pagination<E extends EntityBase,
   }
 }
 
-class _PaginationInfo {
+class PaginationInfo {
   final int size;
   final bool fetchMore;
   final bool forceRefetch;
-  _PaginationInfo(
-      {required this.size,
-      required this.fetchMore,
-      required this.forceRefetch});
+  PaginationInfo(
+      {this.size = 20, this.fetchMore = false, this.forceRefetch = false});
 }

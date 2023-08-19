@@ -8,9 +8,8 @@ part of 'board_entity.dart';
 
 BoardEntity _$BoardEntityFromJson(Map<String, dynamic> json) => BoardEntity(
       id: (json['id'] as num).toDouble(),
-      boardName: json['boardName'] as String,
-      status: json['status'] as String,
-      postList: (json['postList'] as List<dynamic>?)
+      boardName: json['board_name'] as String,
+      postList: (json['post_list'] as List<dynamic>?)
           ?.map((e) => PostEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -18,7 +17,6 @@ BoardEntity _$BoardEntityFromJson(Map<String, dynamic> json) => BoardEntity(
 Map<String, dynamic> _$BoardEntityToJson(BoardEntity instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'boardName': instance.boardName,
-      'status': instance.status,
-      'postList': instance.postList,
+      'board_name': instance.boardName,
+      'post_list': instance.postList,
     };

@@ -33,4 +33,9 @@ abstract class PostRepository
   @override
   @DELETE("/delete/{id}")
   Future<void> delete<double>(@Path() double request);
+  @GET("/board/{id}")
+  Future<CursorPagination<PostEntity>> getPostListByBoardId(
+    @Path() int id,
+    @Queries() PaginationParams? params
+  );
 }

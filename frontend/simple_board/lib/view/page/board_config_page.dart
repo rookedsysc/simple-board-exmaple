@@ -25,7 +25,10 @@ class BoardConfigPage extends ConsumerWidget {
       body: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, color: Theme.of(context).primaryColor,),
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: Theme.of(context).primaryColor,
+            ),
             onPressed: () {
               context.pop();
             },
@@ -64,27 +67,27 @@ class BoardConfigPage extends ConsumerWidget {
     );
   }
 
-    Widget _saveButton(BuildContext context, WidgetRef ref) {
+  Widget _saveButton(BuildContext context, WidgetRef ref) {
     return OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(color: Theme.of(context).primaryColor),
-        ),
-        onPressed: () async {
-          if (_boardConfigKey.currentState!.validate()) {
-            _boardConfigKey.currentState!.save();
-            BoardCreateModel request = ref.read(boardConfigPageProvider);
-            await ref.read(boardRepositoryProvider).create(request);
-            if (context.mounted) {
-              context.pop();
-            }
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(color: Theme.of(context).primaryColor),
+      ),
+      onPressed: () async {
+        if (_boardConfigKey.currentState!.validate()) {
+          _boardConfigKey.currentState!.save();
+          BoardCreateModel request = ref.read(boardConfigPageProvider);
+          await ref.read(boardRepositoryProvider).create(request);
+          if (context.mounted) {
+            context.pop();
           }
-        },
-        child: Text(
-          'Save',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ));
+        }
+      },
+      child: Text(
+        'Save',
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
   }
-
 }
 
 @riverpod

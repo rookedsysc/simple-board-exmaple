@@ -127,7 +127,7 @@ class _BoardRepository implements BoardRepository {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$boardRepositoryHash() => r'c2cbee84e755a2418034e0a3003963a9ca7e6cee';
+String _$boardRepositoryHash() => r'3949753642bb1868e9bbf6d6a98d24c093f382d8';
 
 /// See also [boardRepository].
 @ProviderFor(boardRepository)

@@ -12,7 +12,7 @@ part 'board_repository.g.dart';
 @riverpod
 BoardRepository boardRepository(BoardRepositoryRef ref) {
   final Dio dio = ref.read(dioProvider);
-  return BoardRepository(dio);
+  return BoardRepository(dio, baseUrl: "http://localhost:8080/api/board");
 }
 
 @RestApi()
