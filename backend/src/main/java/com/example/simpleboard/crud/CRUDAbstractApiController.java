@@ -45,9 +45,9 @@ public abstract class CRUDAbstractApiController<DTO, ENTITY extends EntityBase> 
   }
 
   @Override
-  @DeleteMapping("/delete/{id}")
+  @PostMapping("/delete")
   public void delete(
-      @PathVariable
+      @RequestBody
       Long id
   ) {
     service.delete(id);

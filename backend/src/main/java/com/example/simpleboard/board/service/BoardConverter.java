@@ -52,7 +52,7 @@ public class BoardConverter implements Converter<BoardDto, BoardEntity> {
     BoardEntity boardEntity = BoardEntity.builder()
         .id(boardDto.getId())
         .boardName(boardDto.getBoardName())
-        .status(boardDto.getStatus())
+        .status("REGISTERED")
         .postList(postList)
         .build();
     return boardEntity;
