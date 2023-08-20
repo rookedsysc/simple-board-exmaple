@@ -19,15 +19,39 @@ class _BoardRepository implements BoardRepository {
   String? baseUrl;
 
   @override
-  Future<void> create<BoardCreateModel>(request) async {
+  Future<void> create<BoardConfigModel>(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'content-type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
     final _data = request;
     await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
+    )
+        .compose(
+          _dio.options,
+          '',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+  }
+
+  @override
+  Future<void> update<BoardConfigModel>(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'content-type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = request;
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'application/json',
     )
         .compose(
           _dio.options,
@@ -90,19 +114,21 @@ class _BoardRepository implements BoardRepository {
   }
 
   @override
-  Future<void> delete<double>(request) async {
+  Future<void> delete<BoardDeleteModel>(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _headers = <String, dynamic>{r'content-type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = request;
     await _dio.fetch<void>(_setStreamType<void>(Options(
-      method: 'DELETE',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
     )
         .compose(
           _dio.options,
-          '/delete/{id}',
+          '/delete',
           queryParameters: queryParameters,
           data: _data,
         )

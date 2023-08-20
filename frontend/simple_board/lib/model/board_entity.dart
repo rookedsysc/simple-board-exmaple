@@ -8,7 +8,7 @@ part 'board_entity.g.dart';
 
 @JsonSerializable()
 class BoardEntity implements EntityBase {
-  double id;
+  int id;
   @JsonKey(name: 'board_name')
   String boardName;
   @JsonKey(name: 'post_list')

@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_board/common/interface/repository_base.dart';
@@ -6,6 +6,7 @@ import 'package:simple_board/common/model/pagination_model.dart';
 import 'package:simple_board/common/model/pagination_params.dart';
 import 'package:simple_board/controller/provider/dio_provider.dart';
 import 'package:simple_board/model/board_entity.dart';
+import 'package:simple_board/model/board_request_dto.dart';
 
 part 'board_repository.g.dart';
 
@@ -21,17 +22,22 @@ abstract class BoardRepository
   factory BoardRepository(Dio dio, {String baseUrl}) = _BoardRepository;
 
   @override
+  @Headers({"content-type": "application/json"})
   @POST("")
-  Future<void> create<BoardCreateModel>(@Body()BoardCreateModel request);
+  Future<void> create<BoardConfigModel>(@Body() BoardConfigModel request);
+  @override
+  @Headers({"content-type": "application/json"})
+  @PUT("")
+  Future<void> update<BoardConfigModel>(@Body() BoardConfigModel request);
   @override
   @GET("/all")
-  Future<CursorPagination<BoardEntity>> paginate(@Queries() PaginationParams? params);
+  Future<CursorPagination<BoardEntity>> paginate(
+      @Queries() PaginationParams? params);
   @override
   @GET("/id/{id}")
   Future<BoardEntity> get(@Path() double id);
   @override
-  @DELETE("/delete/{id}")
-  Future<void> delete<double>(@Path() double request);
+  @Headers({"content-type": "application/json"})
+  @POST("/delete")
+  Future<void> delete<BoardDeleteModel>(@Body() BoardDeleteModel request);
 }
-
-

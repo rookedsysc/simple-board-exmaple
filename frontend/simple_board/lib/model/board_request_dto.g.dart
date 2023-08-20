@@ -6,12 +6,15 @@ part of 'board_request_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BoardCreateModel _$BoardCreateModelFromJson(Map<String, dynamic> json) =>
-    BoardCreateModel(
+BoardConfigModel _$BoardConfigModelFromJson(Map<String, dynamic> json) =>
+    BoardConfigModel(
+      id: json['id'] as int?,
       boardName: json['board_name'] as String,
-    );
+    )..password = json['password'] as String;
 
-Map<String, dynamic> _$BoardCreateModelToJson(BoardCreateModel instance) =>
+Map<String, dynamic> _$BoardConfigModelToJson(BoardConfigModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'board_name': instance.boardName,
+      'password': instance.password,
     };

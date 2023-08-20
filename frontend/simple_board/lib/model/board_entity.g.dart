@@ -7,7 +7,7 @@ part of 'board_entity.dart';
 // **************************************************************************
 
 BoardEntity _$BoardEntityFromJson(Map<String, dynamic> json) => BoardEntity(
-      id: (json['id'] as num).toDouble(),
+      id: json['id'] as int,
       boardName: json['board_name'] as String,
       postList: (json['post_list'] as List<dynamic>?)
           ?.map((e) => PostEntity.fromJson(e as Map<String, dynamic>))
