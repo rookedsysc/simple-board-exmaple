@@ -30,6 +30,8 @@ class PostDeleteDTO implements RequestBase {
 
 @JsonSerializable()
 class PostCreateDTO implements RequestBase {
+  @JsonKey(name: 'board_id')
+  int boardId;
   @JsonKey(name: 'user_name')
   String userName;
   String email;
@@ -39,6 +41,7 @@ class PostCreateDTO implements RequestBase {
   String content;
 
   PostCreateDTO({
+    this.boardId = 1,
     required this.userName,
     required this.email,
     required this.title,

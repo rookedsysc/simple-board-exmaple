@@ -20,6 +20,7 @@ Map<String, dynamic> _$PostDeleteDTOToJson(PostDeleteDTO instance) =>
 
 PostCreateDTO _$PostCreateDTOFromJson(Map<String, dynamic> json) =>
     PostCreateDTO(
+      boardId: json['board_id'] as int? ?? 1,
       userName: json['user_name'] as String,
       email: json['email'] as String,
       title: json['title'] as String,
@@ -29,6 +30,7 @@ PostCreateDTO _$PostCreateDTOFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$PostCreateDTOToJson(PostCreateDTO instance) =>
     <String, dynamic>{
+      'board_id': instance.boardId,
       'user_name': instance.userName,
       'email': instance.email,
       'password': instance.password,

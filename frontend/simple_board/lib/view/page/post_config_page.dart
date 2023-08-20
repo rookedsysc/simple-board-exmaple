@@ -135,16 +135,18 @@ class PostConfigPage extends ConsumerWidget {
           if (_postConfigKey.currentState!.validate()) {
             _postConfigKey.currentState!.save();
             PostCreateDTO request = ref.read(postConfigPageProvider);
-            await ref.read(postRepositoryProvider).create(request);
+            request.boardId = ref.read(boardIdProvider);
+            await ref.read(postRepositoryProvider).create<PostCreateDTO>(request);
             if (context.mounted) {
               context.pop();
             }
           }
         },
-        child: Text(
-          'Save',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ));
+      child: Text(
+        'Save',
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
   }
 }
 

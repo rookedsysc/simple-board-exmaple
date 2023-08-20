@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_board/common/interface/repository_base.dart';
@@ -23,6 +23,7 @@ abstract class PostRepository
 
   @override
   @POST("")
+  @Headers({"content-type": "application/json"})
   Future<void> create<PostCreateModel>(@Body()PostCreateModel request);
     @override
   @PUT("")

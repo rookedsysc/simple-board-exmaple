@@ -22,12 +22,14 @@ class _PostRepository implements PostRepository {
   Future<void> create<PostCreateModel>(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'content-type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
     final _data = request;
     await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
     )
         .compose(
           _dio.options,

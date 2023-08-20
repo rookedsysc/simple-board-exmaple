@@ -10,14 +10,14 @@ import 'package:simple_board/view/widget/post_create_button.dart';
 
 class PostPage extends ConsumerWidget {
   static const String routeName = 'post_page';
-  final double? boardId;
-  const PostPage({this.boardId,super.key});
+  final int boardId;
+  const PostPage({required this.boardId,super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return CupertinoScaffold(
       body: Scaffold(
-        floatingActionButton: const PostCreateButton(),
+        floatingActionButton: PostCreateButton(boardId: boardId,),
         appBar: _appBar(context),
         body: PaginationListView<PostEntity>(
           provider: postService,
