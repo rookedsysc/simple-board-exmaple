@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:simple_board/common/widget/component_card.dart';
-import 'package:simple_board/common/widget/editable_list_view.dart';
+import 'package:simple_board/common/widget/pagination_list_view.dart';
 import 'package:simple_board/controller/service/post_service.dart';
 import 'package:simple_board/model/post_entity.dart';
 import 'package:simple_board/view/widget/post_create_button.dart';

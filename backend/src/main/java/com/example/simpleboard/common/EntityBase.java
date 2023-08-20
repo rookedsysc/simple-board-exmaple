@@ -5,5 +5,6 @@ import lombok.Setter;
 
 public interface EntityBase {
   String status = "REGISTERED";
+  String getStatus();
   void setStatus(String status);
 }

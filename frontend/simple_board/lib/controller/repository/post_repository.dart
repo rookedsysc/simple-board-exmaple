@@ -24,6 +24,9 @@ abstract class PostRepository
   @override
   @POST("")
   Future<void> create<PostCreateModel>(@Body()PostCreateModel request);
+    @override
+  @PUT("")
+  Future<void> update<PostCreateModel>(@Body()PostCreateModel request);
   @override
   @GET("/all")
   Future<CursorPagination<PostEntity>> paginate(@Queries() PaginationParams? params);

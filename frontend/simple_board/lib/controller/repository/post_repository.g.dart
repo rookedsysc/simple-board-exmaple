@@ -39,6 +39,26 @@ class _PostRepository implements PostRepository {
   }
 
   @override
+  Future<void> update<PostCreateModel>(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = request;
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+  }
+
+  @override
   Future<CursorPagination<PostEntity>> paginate(params) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

@@ -14,7 +14,7 @@ Dio dio(DioRef ref) {
 class CustomInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    debugPrint("path : ${options.uri}\n\n");
+    debugPrint("path : ${options.uri} data : ${options.data}\n");
     return super.onRequest(options, handler);
   }
 }

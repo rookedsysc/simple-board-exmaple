@@ -14,7 +14,7 @@ class BoardService extends Pagination<BoardEntity, BoardRepository>{
   BoardService({required BoardRepository boardRepository})
       : _boardRepository = boardRepository, super(repository: boardRepository);
 
-  Future<void> create(BoardCreateModel boardCreateModel) async {
+  Future<void> create(BoardConfigModel boardCreateModel) async {
     await _boardRepository.create(boardCreateModel);
   }
 

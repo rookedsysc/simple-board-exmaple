@@ -13,13 +13,15 @@ abstract class RepositoryRegacyBase<E extends EntityBase> {
 }
 
 abstract class RepositoryBase<E extends EntityBase,C extends CursorPagination<E>> {
-    @POST("")
+  @POST("")
   Future<void> create<R>(R request);
-    @GET("/all")
+  @PUT("")
+  Future<void> update<R>(R request);
+  @GET("/all")
   Future<CursorPagination<E>> paginate(PaginationParams? params);
-    @GET("/id/{id}")
+  @GET("/id/{id}")
   Future<E> get(double id);
-    @DELETE("/delete/{id}")
+  @POST("/delete")
   Future<void> delete<R>(R request);
 }
 

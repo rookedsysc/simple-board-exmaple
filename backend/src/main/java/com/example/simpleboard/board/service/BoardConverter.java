@@ -33,8 +33,7 @@ public class BoardConverter implements Converter<BoardDto, BoardEntity> {
         .stream()
         .map(postConverter::toDto)
         .collect(Collectors.toList());
-    BoardDto boardDto = BoardDto.builder()
-        .id(getBoardId(boardEntity))
+    BoardDto boardDto = BoardDto.builder().id(boardEntity.getId())
         .boardName(boardEntity.getBoardName())
         .status(boardEntity.getStatus())
         .postList(postList)
@@ -49,58 +48,13 @@ public class BoardConverter implements Converter<BoardDto, BoardEntity> {
       postList = postRepository.findById(boardDto.getId())
           .stream()
           .collect(Collectors.toList());
-    } catch (Exception e) {
-      throw new IllegalArgumentException("BoardConverter Error : postList를 불러오지 못했습니다.");
-    }
+    } catch (Exception ignored) {}
     BoardEntity boardEntity = BoardEntity.builder()
-        .id(getBoardId(boardDto))
+        .id(boardDto.getId())
         .boardName(boardDto.getBoardName())
-        .status(boardDto.getStatus())
+        .status("REGISTERED")
         .postList(postList)
         .build();
     return boardEntity;
-  }
-
-  private Long getBoardId(BoardEntity boardEntity) {
-    Long id = boardEntity.getId();
-    if (id == null) {
-      try {
-        // 맨 마지막 ID 받아옴
-        List<BoardEntity> boardEntityList = boardRepository.findAll()
-            .stream()
-            .sorted((a, b) -> b.getId()
-                .compareTo(a.getId()))
-            .collect(Collectors.toList());
-        return boardEntityList.get(0)
-            .getId();
-
-      } catch (Exception e) {
-        log.error("IllegalArgumentException: {}", e.getMessage());
-        throw new IllegalArgumentException("BoardConverter Error : 정렬 실패");
-      }
-    }
-
-    return id;
-  }
-
-  private Long getBoardId(BoardDto boadDto) {
-    Long id = boadDto.getId();
-    if (id == null) {
-      try {
-        // 맨 마지막 ID 받아옴
-        List<BoardEntity> boardEntityList = boardRepository.findAll()
-            .stream()
-            .sorted((a, b) -> b.getId()
-                .compareTo(a.getId()))
-            .collect(Collectors.toList());
-        return boardEntityList.get(0)
-            .getId();
-      } catch (Exception e) {
-        log.error("IllegalArgumentException: {}", e.getMessage());
-        throw new IllegalArgumentException("BoardConverter Error : 정렬 실패");
-      }
-    }
-
-    return id;
   }
 }
