@@ -8,7 +8,7 @@ part of 'post_request_dto.dart';
 
 PostDeleteDTO _$PostDeleteDTOFromJson(Map<String, dynamic> json) =>
     PostDeleteDTO(
-      postId: (json['post_id'] as num).toDouble(),
+      postId: json['post_id'] as int,
       password: json['password'] as String,
     );
 

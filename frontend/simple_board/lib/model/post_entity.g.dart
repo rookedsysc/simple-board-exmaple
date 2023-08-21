@@ -7,8 +7,8 @@ part of 'post_entity.dart';
 // **************************************************************************
 
 PostEntity _$PostEntityFromJson(Map<String, dynamic> json) => PostEntity(
-      id: (json['id'] as num).toDouble(),
-      boardId: (json['board_id'] as num).toDouble(),
+      id: json['id'] as int,
+      boardId: json['board_id'] as int,
       userName: json['user_name'] as String,
       password: json['password'] as String,
       email: json['email'] as String,

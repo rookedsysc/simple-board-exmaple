@@ -7,7 +7,7 @@ part 'post_request_dto.g.dart';
 @JsonSerializable()
 class PostDeleteDTO implements RequestBase {
   @JsonKey(name: 'post_id')
-  double postId;
+  int postId;
   @override
   String password;
 

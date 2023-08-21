@@ -7,8 +7,8 @@ part of 'reply_entity.dart';
 // **************************************************************************
 
 ReplyEntity _$ReplyEntityFromJson(Map<String, dynamic> json) => ReplyEntity(
-      id: (json['id'] as num).toDouble(),
-      postId: (json['postId'] as num).toDouble(),
+      id: json['id'] as int,
+      postId: json['postId'] as int,
       userName: json['userName'] as String,
       password: json['password'] as String,
       status: json['status'] as String,

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_board/common/interface/repository_base.dart';
@@ -33,11 +34,13 @@ abstract class BoardRepository
   @GET("/all")
   Future<CursorPagination<BoardEntity>> paginate(
       @Queries() PaginationParams? params);
+
   @override
   @GET("/id/{id}")
-  Future<BoardEntity> get(@Path() double id);
+  Future<BoardEntity> get(@Path() int id);
+
   @override
   @Headers({"content-type": "application/json"})
-  @POST("/delete")
-  Future<void> delete<BoardDeleteModel>(@Body() BoardDeleteModel request);
+  @DELETE("/delete/{id}")
+  Future<void> delete(@Path() int id);
 }
