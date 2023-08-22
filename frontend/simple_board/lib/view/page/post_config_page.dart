@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_board/common/widget/plain_text_widget.dart';
 import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/common/widget/padding_factory.dart';
@@ -10,7 +9,6 @@ import 'package:simple_board/controller/repository/post_repository.dart';
 import 'package:simple_board/controller/service/post_service.dart';
 import 'package:simple_board/model/post_request_dto.dart';
 
-part 'post_config_page.g.dart';
 
 final GlobalKey<FormState> _postConfigKey = GlobalKey<FormState>();
 
@@ -150,13 +148,12 @@ class PostConfigPage extends ConsumerWidget {
   }
 }
 
-@riverpod
-PostCreateDTO postConfigPage(PostConfigPageRef ref) {
-  return PostCreateDTO(
+final postConfigPageProvider = StateProvider<PostCreateDTO>(
+  (ref) => PostCreateDTO(
     content: 'Content',
     email: 'Email',
     password: 'Password 4자리 숫자',
     title: 'Title',
     userName: 'User Nmae',
-  );
-}
+  ),
+);

@@ -8,10 +8,12 @@ import 'package:simple_board/common/interface/editable_item.dart';
 import 'package:simple_board/common/utils/error_alert.dart';
 import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/common/widget/plain_text_widget.dart';
+import 'package:simple_board/controller/converter/post_converter.dart';
 import 'package:simple_board/controller/repository/post_repository.dart';
 import 'package:simple_board/controller/service/post_service.dart';
 import 'package:simple_board/model/post_entity.dart';
 import 'package:simple_board/model/post_request_dto.dart';
+import 'package:simple_board/view/page/post_config_page.dart';
 import 'package:simple_board/view/page/post_page.dart';
 
 final GlobalKey<FormState> _postDeleteKey = GlobalKey<FormState>();
@@ -29,19 +31,14 @@ class PostItem extends ConsumerWidget {
       repository: ref.read(postRepositoryProvider),
       onDeletePress: _onDelete(context, ref),
       onEditPress: () async {
-        // ref.read(boardConfigProvider.notifier).state =
-        //     BoardConfigModel(id: model.id, boardName: model.boardName);
-        // await Navigator.of(context).push(
-        //   CupertinoSheetRoute<void>(
-        //     initialStop: 0.5,
-        //     stops: <double>[0, 0.5, 1],
-        //     // Screen은 이동할 스크린
-        //     builder: (BuildContext context) => const BoardConfigPage(isEdit: true,),
-        //   ),
-        // );
-        // if (context.mounted) {
-        //   context.pop();
-        // }
+        PostCreateDTO postCreateDTO = PostConverter().toCreateDto(model);
+
+        ref.read(postConfigPageProvider.notifier).state = postCreateDTO;
+
+        CupertinoScaffold.showCupertinoModalBottomSheet(
+          context: context,
+          builder: (context) => const PostConfigPage(),
+        );
       },
       onTap: _onTap(ref, context),
       child: ComponentCard(
@@ -71,13 +68,7 @@ class PostItem extends ConsumerWidget {
               repository: repo, model: model, deleteKey: _postDeleteKey),
         ),
       );
-
-
-        // showMaterialModalBottomSheet(context: context, builder: (context) {
-        //   return DeleteRequestPage(model: model, deleteKey: _postDeleteKey);
-        //   },
-        // );
-      };
+    };
     
   }
 

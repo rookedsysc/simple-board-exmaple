@@ -38,7 +38,7 @@ class PostCreateDTO implements RequestBase {
   @override
   String password;
   String title;
-  String content;
+  String? content;
 
   PostCreateDTO({
     this.boardId = 1,
