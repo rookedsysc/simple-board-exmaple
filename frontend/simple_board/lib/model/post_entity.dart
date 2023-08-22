@@ -7,9 +7,10 @@ part 'post_entity.g.dart';
 
 @JsonSerializable()
 class PostEntity implements EntityBase {
-  final double id;
+  @override
+  final int id;
   @JsonKey(name: 'board_id')
-  final double boardId;
+  final int boardId;
   @JsonKey(name: 'user_name')
   final String userName;
   @override
@@ -23,8 +24,8 @@ class PostEntity implements EntityBase {
   final DateTime postedAt;
 
   PostEntity copyWith({
-    double? id,
-    double? boardId,
+    int? id,
+    int? boardId,
     String? userName,
     String? password,
     String? email,

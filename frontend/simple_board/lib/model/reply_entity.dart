@@ -8,8 +8,8 @@ part 'reply_entity.g.dart';
 
 @JsonSerializable()
 class ReplyEntity implements EntityBase {
-    double id;
-    double postId;
+    int id;
+    int postId;
     String userName;
     @override
     String password;

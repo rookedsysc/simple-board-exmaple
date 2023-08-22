@@ -5,9 +5,12 @@ import 'package:simple_board/controller/service/pagination.dart';
 import 'package:simple_board/model/board_entity.dart';
 import 'package:simple_board/model/board_request_dto.dart';
 
-final boardService = StateNotifierProvider.autoDispose<Pagination<BoardEntity,BoardRepository>, CursorPaginationBase>((ref) {
-  return BoardService(boardRepository: ref.read(boardRepositoryProvider));
-});
+final boardService = StateNotifierProvider.autoDispose<
+    Pagination<BoardEntity, BoardRepository>, CursorPaginationBase>(
+  (ref) {
+    return BoardService(boardRepository: ref.read(boardRepositoryProvider));
+  },
+);
 
 class BoardService extends Pagination<BoardEntity, BoardRepository>{
   final BoardRepository _boardRepository;
@@ -18,11 +21,11 @@ class BoardService extends Pagination<BoardEntity, BoardRepository>{
     await _boardRepository.create(boardCreateModel);
   }
 
-  Future<void> delete(BoardDeleteModel request) async {
-    return await _boardRepository.delete(request);
+  Future<void> delete(int id) async {
+    return await _boardRepository.delete(id);
   }
 
-  Future<BoardEntity> get(double id) async {
+  Future<BoardEntity> get(int id) async {
     return await _boardRepository.get(id);
   }
 }

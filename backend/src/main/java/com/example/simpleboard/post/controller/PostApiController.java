@@ -4,6 +4,7 @@ import com.example.simpleboard.common.Api;
 import com.example.simpleboard.crud.CRUDAbstractApiController;
 import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.model.PostDto;
+import com.example.simpleboard.post.model.PostViewRequest;
 import com.example.simpleboard.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,11 @@ public class PostApiController extends CRUDAbstractApiController<PostDto, PostEn
   @GetMapping("/board/{boardId}")
   public Api<List<PostDto>> findByBoardId(@PathVariable Long boardId, @PageableDefault Pageable pageable) {
     return postService.findByBoardId(boardId, pageable);
+  }
+
+  @PostMapping("/password")
+  public boolean checkPassword(@RequestBody PostViewRequest request) {
+    return postService.checkPassword(request);
   }
 }
 

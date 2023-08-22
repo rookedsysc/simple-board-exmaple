@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:sheet/route.dart';
-import 'package:simple_board/common/interface/editable_item.dart';
-import 'package:simple_board/common/widget/component_card.dart';
 import 'package:simple_board/common/widget/pagination_list_view.dart';
-import 'package:simple_board/controller/repository/board_repository.dart';
 import 'package:simple_board/controller/service/board_service.dart';
-import 'package:simple_board/controller/service/post_service.dart';
-import 'package:simple_board/model/board_entity.dart';
 import 'package:simple_board/model/board_request_dto.dart';
 import 'package:simple_board/view/page/board_config_page.dart';
-import 'package:simple_board/view/page/post_page.dart';
 import 'package:simple_board/view/widget/board_item.dart';
 
 class BoardPage extends StatelessWidget {

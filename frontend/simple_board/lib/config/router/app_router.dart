@@ -64,10 +64,8 @@ GoRoute _postPage({required List<GoRoute> routes}) {
     path: "${PostPage.routeName}/:boardId",
     name: PostPage.routeName,
     builder: (context, state) {
-      double? boardId;
-      if (state.pathParameters['boardId'] != null) {
-        boardId = double.parse(state.pathParameters['boardId']!);
-      }
+      int boardId;
+      boardId = int.parse(state.pathParameters['boardId']!);
       return PostPage(
         boardId: boardId,
       );

@@ -114,21 +114,21 @@ class _BoardRepository implements BoardRepository {
   }
 
   @override
-  Future<void> delete<BoardDeleteModel>(request) async {
+  Future<void> delete(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'content-type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = request;
+    final Map<String, dynamic>? _data = null;
     await _dio.fetch<void>(_setStreamType<void>(Options(
-      method: 'POST',
+      method: 'DELETE',
       headers: _headers,
       extra: _extra,
       contentType: 'application/json',
     )
         .compose(
           _dio.options,
-          '/delete',
+          '/delete/${id}',
           queryParameters: queryParameters,
           data: _data,
         )

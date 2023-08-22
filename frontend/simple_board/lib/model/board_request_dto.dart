@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:simple_board/common/interface/request_base.dart';
 
 part 'board_request_dto.g.dart';
@@ -8,6 +7,7 @@ part 'board_request_dto.g.dart';
 final boardConfigProvider = StateProvider<BoardConfigModel>(
     (ref) => BoardConfigModel(id: null, boardName: ""));
 
+@JsonSerializable()
 class BoardDeleteModel implements RequestBase {
   final int id;
   BoardDeleteModel({
@@ -15,7 +15,11 @@ class BoardDeleteModel implements RequestBase {
   });
 
   @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String password = "";
+
+  factory BoardDeleteModel.fromJson(Map<String, dynamic> json) => _$BoardDeleteModelFromJson(json);
+  Map<String, dynamic> toJson() => _$BoardDeleteModelToJson(this);
 }
 
 @JsonSerializable()

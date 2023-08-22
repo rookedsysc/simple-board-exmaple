@@ -1,23 +1,19 @@
 package com.example.simpleboard.post.service;
 
-import com.example.simpleboard.board.db.BoardEntity;
-import com.example.simpleboard.board.model.BoardDto;
 import com.example.simpleboard.common.Api;
 import com.example.simpleboard.common.Pagination;
-import com.example.simpleboard.board.db.BoardRepository;
 import com.example.simpleboard.crud.CRUDAbstractService;
 import com.example.simpleboard.post.db.PostEntity;
 import com.example.simpleboard.post.db.PostRepository;
 import com.example.simpleboard.post.model.PostDto;
 import com.example.simpleboard.post.model.PostViewRequest;
-import com.example.simpleboard.reply.db.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,4 +39,13 @@ public class PostService extends CRUDAbstractService<PostDto, PostEntity> {
     return Api.<List<PostDto>>builder().body(postDtoList).pagination(pagination).build();
   }
 
+  public boolean checkPassword(PostViewRequest request) {
+    String dbPassword = postRepository.findById(request.getPostId()).get().getPassword();
+
+    if(!Objects.equals(dbPassword, request.getPassword()) || dbPassword == null) {
+      return false;
+    }
+
+    return true;
+  }
 }
